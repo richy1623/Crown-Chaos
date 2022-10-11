@@ -25,7 +25,8 @@ public class Player : MonoBehaviour
     {
         forwardInput = Input.GetAxis("Vertical");
         yawInput = Input.GetAxis("Horizontal");
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !HUD.gameIsPaused)
         {
             Shoot();
         }
@@ -33,12 +34,13 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles+new Vector3(0, 90, 90))).GetComponent<Bolt>().setPlayer(playerID);
+        //Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles+new Vector3(0, 90, 90))).GetComponent<Bolt>().setPlayer(playerID);
+        Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles)).GetComponent<Bolt>().setPlayer(playerID);
     }
 
     private void FixedUpdate()
     {
-        rigidBody.velocity = transform.forward * 5 * forwardInput;
         rigidBody.transform.Rotate(0, yawInput * 2, 0, Space.Self);
+        rigidBody.velocity = transform.forward * 5 * forwardInput;
     }
 }

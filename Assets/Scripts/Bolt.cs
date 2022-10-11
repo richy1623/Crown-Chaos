@@ -12,6 +12,8 @@ public class Bolt : MonoBehaviour
     private int bounces;
     private float speed;
     private int playerID;
+
+    [SerializeField] private AudioSource wallHitSFX;
     //private float y;
 
 
@@ -30,7 +32,7 @@ public class Bolt : MonoBehaviour
 
     private void Move()
     {
-        transform.Translate(Vector3.up * speed * Time.fixedDeltaTime);
+        transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
         //transform.position = new Vector3(transform.position.x, y, transform.position.z);
     }
 
@@ -50,6 +52,7 @@ public class Bolt : MonoBehaviour
         print("Collide");
         if (collision.gameObject.tag == "Wall")
         {
+            wallHitSFX.Play();
             Bounce(collision.contacts[0].normal);
             //Debug.DrawRay(collision.contacts[0].point, collision.contacts[0].normal);
         }else if (collision.gameObject.tag == "Player")
@@ -62,9 +65,10 @@ public class Bolt : MonoBehaviour
     private void Bounce(Vector3 normal)
     {
         //print("Bounce "+ bounces);
-        Vector3 v = Vector3.Reflect(transform.up, normal);
-        float rot = 90 - Mathf.Atan2(v.z, v.x) * Mathf.Rad2Deg;
-        transform.eulerAngles = new Vector3(90, rot, 0);
+        Vector3 v = Vector3.Reflect(transform.forward, normal);
+        transform.rotation = Quaternion.FromToRotation(Vector3.forward, v);
+        //float rot = 90 - Mathf.Atan2(v.z, v.x) * Mathf.Rad2Deg;
+        //transform.eulerAngles = new Vector3(90, rot, 0);
         Move();
         bounces--;
         if (bounces <= 0)

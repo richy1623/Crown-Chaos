@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7875032214673524423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7875032214673524421}
+  - component: {fileID: 7875032214673524422}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7875032214673524421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7875032214673524423}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7875032214673524422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7875032214673524423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467854d853dc2774cbdadaebf609c95e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: button_click
+    clip: {fileID: 8300000, guid: b1c4dd42074cd5744b52f20fe2b99af3, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: button_hover
+    clip: {fileID: 8300000, guid: 47fffa0abf9bfea49bd611941e6d9633, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: option_click
+    clip: {fileID: 8300000, guid: 0cee18a7059ef344495551fac98f24b3, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  bgMusic:
+  - name: Track1
+    clip: {fileID: 8300000, guid: 9ecfa2d8f0190c84ca120a6ea1da0087, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: Track2
+    clip: {fileID: 8300000, guid: 1f07775eb318848448bf43bfbdd40b92, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: Track3
+    clip: {fileID: 8300000, guid: 3ca728e96f235b14c860ec9f4b5c914d, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: Track4
+    clip: {fileID: 8300000, guid: d3809ec338f787f45a375840c33a9821, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: Track5
+    clip: {fileID: 8300000, guid: a9e13e07ce6e02e43b567c0dd361c08f, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: Track6
+    clip: {fileID: 8300000, guid: c9f6a4d341a04f94a97d704dce0df783, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  mixer: {fileID: 24100000, guid: 57159a267b682dd449f9b126e3f23f3f, type: 2}
+  sfxGroup: {fileID: 2663866480380800381, guid: 57159a267b682dd449f9b126e3f23f3f,
+    type: 2}
+  musicGroup: {fileID: -1441441855017661240, guid: 57159a267b682dd449f9b126e3f23f3f,
+    type: 2}
+  bgMusicIndex: 0
