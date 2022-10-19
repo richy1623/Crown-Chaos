@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     enum botlPowers {buckshot_pu, ghost_bolt_pu};
     Dictionary<string, int> timedPowers;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && !HUD.gameIsPaused)
         {
             Shoot();
+            AudioManager.instance.Play("bolt_fire");
         }
         powerupIndicator.transform.position = transform.position;
     }

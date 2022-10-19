@@ -60,7 +60,17 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     source: {fileID: 0}
+  - name: bolt_fire
+    clip: {fileID: 8300000, guid: c144a0bd2d134654996162826c91a8f4, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
   bgMusic:
+  - name: Track3
+    clip: {fileID: 8300000, guid: 3ca728e96f235b14c860ec9f4b5c914d, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
   - name: Track1
     clip: {fileID: 8300000, guid: 9ecfa2d8f0190c84ca120a6ea1da0087, type: 3}
     volume: 0.5
@@ -68,11 +78,6 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Track2
     clip: {fileID: 8300000, guid: 1f07775eb318848448bf43bfbdd40b92, type: 3}
-    volume: 0.5
-    pitch: 1
-    source: {fileID: 0}
-  - name: Track3
-    clip: {fileID: 8300000, guid: 3ca728e96f235b14c860ec9f4b5c914d, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}
@@ -88,6 +93,16 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Track6
     clip: {fileID: 8300000, guid: c9f6a4d341a04f94a97d704dce0df783, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: Track7
+    clip: {fileID: 8300000, guid: 4f7e008f344d728468a71baa5a593c4e, type: 3}
+    volume: 0.5
+    pitch: 1
+    source: {fileID: 0}
+  - name: Track8
+    clip: {fileID: 8300000, guid: 822007d5287f9594097ad35613718621, type: 3}
     volume: 0.5
     pitch: 1
     source: {fileID: 0}

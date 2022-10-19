@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8050740389342446418}
   - component: {fileID: 6716465210508726806}
   - component: {fileID: -4828364647971917307}
+  - component: {fileID: 2702492829149531246}
   m_Layer: 0
   m_Name: enhanced_sight_pu
   m_TagString: Untagged
@@ -98,3 +99,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000002, y: 2, z: 2.0000002}
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &2702492829149531246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652699612332979481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e451c4b799c5e4428eb49cc4f9ad373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

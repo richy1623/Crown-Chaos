@@ -16,13 +16,15 @@ public class AudioManager : MonoBehaviour
 
     public int bgMusicIndex;
 
+    private bool musicPaused = false;
+
     public static AudioManager instance;
 
     private void Awake()
     {
         if (instance == null)
         {
-            instance = this;    
+            instance = this;
         }
         else
         {
@@ -59,7 +61,7 @@ public class AudioManager : MonoBehaviour
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if(s == null)
+        if (s == null)
         {
             return;
         }
@@ -68,9 +70,9 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if (!bgMusic[bgMusicIndex].source.isPlaying || !bgMusic[bgMusicIndex].source)
+        if ((!bgMusic[bgMusicIndex].source.isPlaying || !bgMusic[bgMusicIndex].source) && !musicPaused)
         {
-            if (bgMusicIndex + 1 == bgMusic.Length - 1)
+            if (bgMusicIndex + 1 >= bgMusic.Length - 3)
             {
                 bgMusicIndex = 0;
             }
@@ -80,6 +82,13 @@ public class AudioManager : MonoBehaviour
             }
 
             bgMusic[bgMusicIndex].source.Play();
+            Debug.Log("TRUE");
+        }
+        else if (!bgMusic[bgMusic.Length - 1].source.isPlaying && !bgMusic[bgMusic.Length - 2].source.isPlaying && musicPaused)
+        {
+            bgMusic[bgMusicIndex].source.UnPause();
+            musicPaused = false;
+            Debug.Log("FALSE");
         }
     }
 
@@ -90,5 +99,36 @@ public class AudioManager : MonoBehaviour
 
         mixer.SetFloat(MUSIC_KEY, Mathf.Log10(musicVolume) * 20);
         mixer.SetFloat(SFX_KEY, Mathf.Log10(sfxVolume) * 20);
+    }
+
+    public void playDefeat()
+    {
+        musicPaused = true;
+        bgMusic[bgMusicIndex].source.Pause();
+        bgMusic[bgMusic.Length - 2].source.Play();
+    }
+
+    public void playVictory() {
+        musicPaused = true;
+        bgMusic[bgMusicIndex].source.Pause();
+        bgMusic[bgMusic.Length - 1].source.Play();
+    }
+
+    public void interruptEndMusic()
+    {
+        if (bgMusic[bgMusic.Length - 1].source.isPlaying && musicPaused)
+        {
+            bgMusic[bgMusic.Length - 1].source.Stop();
+            bgMusic[bgMusicIndex].source.UnPause();
+            musicPaused = false;
+            Debug.Log("FALSE");
+        }
+        else if (bgMusic[bgMusic.Length - 2].source.isPlaying && musicPaused)
+        {
+            bgMusic[bgMusic.Length - 2].source.Stop();
+            bgMusic[bgMusicIndex].source.UnPause();
+            musicPaused = false;
+            Debug.Log("FALSE");
+        }
     }
 }
