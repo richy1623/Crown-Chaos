@@ -9,15 +9,17 @@ public class Player : MonoBehaviour
     public GameObject bolt;
 
     public int playerID;
-    private float forwardInput;
-    private float yawInput;
-    private Rigidbody rigidBody;
+    protected float forwardInput;
+    protected float yawInput;
+    protected float speed;
+    protected Rigidbody rigidBody;
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
         playerID = numberOfPlayers++;
+        speed = 5;
     }
 
     // Update is called once per frame
@@ -32,7 +34,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Shoot()
+    protected void Shoot()
     {
         //Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles+new Vector3(0, 90, 90))).GetComponent<Bolt>().setPlayer(playerID);
         Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles)).GetComponent<Bolt>().setPlayer(playerID);
@@ -41,6 +43,13 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rigidBody.transform.Rotate(0, yawInput * 2, 0, Space.Self);
-        rigidBody.velocity = transform.forward * 5 * forwardInput;
+        rigidBody.velocity = transform.forward * speed * forwardInput;
+    }
+
+    public void spawn(Vector3 pos)
+    {
+        pos.y = 0.5f;
+        transform.position = pos;
+        transform.rotation = Quaternion.Euler(0, 270 - Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg, 0);
     }
 }

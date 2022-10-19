@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4096826083650768544}
   - component: {fileID: -8792829162005822470}
   - component: {fileID: 4441996565763236863}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7164357468544037718}
   - component: {fileID: 3690614545623032411}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall_hit_sfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}

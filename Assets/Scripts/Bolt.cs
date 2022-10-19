@@ -23,6 +23,8 @@ public class Bolt : MonoBehaviour
         bounces = MAX_BOUNCES;
         speed = 10;
         //y = transform.position.y;
+
+        Physics.IgnoreLayerCollision(7, 7);
     }
 
     private void FixedUpdate()
