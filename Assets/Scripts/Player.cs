@@ -108,7 +108,6 @@ public class Player : MonoBehaviour
         if (power.Equals("speed_boost_pu"))
             speed = 5.0f;
         hasPowerup = false;
-        powerupIndicator.SetActive(false);
     }
 
     //private void OnCollisionEnter(Collision collision) { }
