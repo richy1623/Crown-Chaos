@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public Transform ballista_top;
     protected Vector3 aimDirection;
     public float speed;
+    public GameObject powerupIndicator;
     private bool hasPowerup;
     private string power;
     enum botlPowers {buckshot_pu, ghost_bolt_pu};
@@ -83,6 +84,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Powerup"))
         {
             hasPowerup = true;
+            powerupIndicator.SetActive(true);
             Destroy(other.gameObject);
             int indexPU = other.ToString().IndexOf("_pu");
             power = other.ToString().Substring(0, indexPU + 3).Trim();
