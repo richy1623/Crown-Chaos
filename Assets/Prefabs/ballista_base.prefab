@@ -129,9 +129,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec0e973048cadf4fb304da180d10e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
   bolt: {fileID: 4096826083650768574, guid: a5a3e8c039580cf449b5a0b6030b7d83, type: 3}
   playerID: 0
+  ballista_top: {fileID: 3453395035486642326}
+  speed: 4
+  powerupIndicator: {fileID: 1742899641471652, guid: 923deea38dc6a8843b15db7638919c1e,
+    type: 3}
 --- !u!1 &6111404839282419961
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,6 +35,10 @@ public class Player : MonoBehaviour
             { "invincibility_pu", 7 },
             { "speed_boost_pu", 8 } };
         aimDirection = Vector3.zero;
+        /*if(this is Player and typeof(this).IsSubclassOf(typeof(Player))
+        {
+            print("true");
+        }*/
     }
 
     // Update is called once per frame
@@ -125,5 +129,18 @@ public class Player : MonoBehaviour
 
         // Calculate a rotation a step closer to the target and applies rotation to this object
         ballista_top.rotation = Quaternion.LookRotation(newDirection);
+    }
+
+    void aimAssist()
+    {
+        Ray ray = new Ray(transform.position, ballista_top.rotation.eulerAngles);
+        RaycastHit raycastHit;
+        Physics.Raycast(ray, out raycastHit, 10f);
+        for (float i = 1; i <= raycastHit.distance; i += raycastHit.distance / 10)
+        {
+            GameObject mySphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            mySphere.transform.position = transform.position + ballista_top.rotation.eulerAngles * i;
+            mySphere.transform.localScale = Vector3.one;
+        }
     }
 }

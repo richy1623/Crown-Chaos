@@ -41851,7 +41851,8 @@ PrefabInstance:
         type: 3}
       propertyPath: powerupIndicator
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1742899641471652, guid: 923deea38dc6a8843b15db7638919c1e,
+        type: 3}
     - target: {fileID: 4685532686067393243, guid: 350fde7a33af057408cb33318cd13cc9,
         type: 3}
       propertyPath: m_Name

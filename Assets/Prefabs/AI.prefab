@@ -215,6 +215,7 @@ MonoBehaviour:
   playerID: 0
   ballista_top: {fileID: 6364478528264543327}
   speed: 0
-  powerupIndicator: {fileID: 0}
+  powerupIndicator: {fileID: 1742899641471652, guid: 923deea38dc6a8843b15db7638919c1e,
+    type: 3}
   map: {fileID: 0}
   mindistance: 0
