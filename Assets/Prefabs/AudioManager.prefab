@@ -65,6 +65,26 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     source: {fileID: 0}
+  - name: activate_powerup
+    clip: {fileID: 8300000, guid: d00f54f2aa8e4d74d8fc5558d9ea98b6, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: pickup_powerup
+    clip: {fileID: 8300000, guid: fcaf0f21ad515f247aa7c5f2cccc958b, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: shield_hit
+    clip: {fileID: 8300000, guid: dac2b47b2a823bb40b536a1fbc8f97da, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: elimination
+    clip: {fileID: 8300000, guid: cfed96ad7cd1044429e3ee3cbe656803, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
   bgMusic:
   - name: Track3
     clip: {fileID: 8300000, guid: 3ca728e96f235b14c860ec9f4b5c914d, type: 3}

@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     private float yawInput;
     protected Rigidbody rigidBody;
     public float speed;
-    public GameObject powerupIndicator;
     private bool hasPowerup;
     private string power;
     enum botlPowers {buckshot_pu, ghost_bolt_pu};
@@ -45,7 +44,6 @@ public class Player : MonoBehaviour
             Shoot();
             AudioManager.instance.Play("bolt_fire");
         }
-        powerupIndicator.transform.position = transform.position;
     }
 
     protected void Shoot()
@@ -74,7 +72,6 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Powerup"))
         {
             hasPowerup = true;
-            powerupIndicator.SetActive(true);
             Destroy(other.gameObject);
             int indexPU = other.ToString().IndexOf("_pu");
             power = other.ToString().Substring(0, indexPU + 3).Trim();
@@ -94,7 +91,6 @@ public class Player : MonoBehaviour
         if (power.Equals("speed_boost_pu"))
             speed = 5.0f;
         hasPowerup = false;
-        powerupIndicator.SetActive(false);
     }
 
     //private void OnCollisionEnter(Collision collision) { }
