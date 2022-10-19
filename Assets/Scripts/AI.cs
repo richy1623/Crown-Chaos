@@ -28,7 +28,6 @@ public class AI : Player
         mindistance = 0.05f;
         target = map.getTarget();
         //waypoint = transform.position;
-        forwardInput = 1;
         moving = false;
         turning = true;
         getPath();
