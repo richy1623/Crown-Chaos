@@ -213,4 +213,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bolt: {fileID: 4096826083650768574, guid: a5a3e8c039580cf449b5a0b6030b7d83, type: 3}
   playerID: 0
+  ballista_top: {fileID: 6364478528264543327}
+  speed: 0
+  powerupIndicator: {fileID: 0}
   map: {fileID: 0}
+  mindistance: 0

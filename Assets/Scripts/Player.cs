@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     private float forwardInput;
     private float yawInput;
     protected Rigidbody rigidBody;
+    public Transform ballista_top;
+    protected Vector3 aimDirection;
     public float speed;
     private bool hasPowerup;
     private string power;
@@ -31,11 +33,13 @@ public class Player : MonoBehaviour
             { "infinite_ammo_pu", 10 },
             { "invincibility_pu", 7 },
             { "speed_boost_pu", 8 } };
+        aimDirection = Vector3.zero;
     }
 
     // Update is called once per frame
     void Update()
     {
+        aim();
         forwardInput = Input.GetAxis("Vertical");
         yawInput = Input.GetAxis("Horizontal");
 
@@ -44,12 +48,20 @@ public class Player : MonoBehaviour
             Shoot();
             AudioManager.instance.Play("bolt_fire");
         }
+        powerupIndicator.transform.position = transform.position;
+
+        Ray ray  = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            aimDirection = hit.point;
+        }
     }
 
     protected void Shoot()
     {
         //Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles+new Vector3(0, 90, 90))).GetComponent<Bolt>().setPlayer(playerID);
-        Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles)).GetComponent<Bolt>().setPlayer(playerID);
+        Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles)).GetComponent<Bolt>().setPlayer(playerID);
     }
 
     private void FixedUpdate()
@@ -63,7 +75,6 @@ public class Player : MonoBehaviour
         pos.y = 0.5f;
         transform.position = pos;
         transform.rotation = Quaternion.Euler(0, 270 - Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg, 0);
-        rigidBody.velocity = transform.forward * speed * forwardInput;
     }
 
     //Destroy powerup on collision
@@ -94,4 +105,22 @@ public class Player : MonoBehaviour
     }
 
     //private void OnCollisionEnter(Collision collision) { }
+
+    protected void aim()
+    {
+        Vector3 targetDirection = aimDirection - ballista_top.position;
+        targetDirection.y = 0;
+        targetDirection = targetDirection.normalized;
+        // The step size is equal to speed times frame time.
+        float singleStep = 4 * Time.deltaTime;
+
+        // Rotate the forward vector towards the target direction by one step
+        Vector3 newDirection = Vector3.RotateTowards(ballista_top.forward, targetDirection, singleStep, 0.0f);
+
+        // Draw a ray pointing at our target in
+        //Debug.DrawRay(transform.position, newDirection, Color.red);
+
+        // Calculate a rotation a step closer to the target and applies rotation to this object
+        ballista_top.rotation = Quaternion.LookRotation(newDirection);
+    }
 }
