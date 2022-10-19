@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class HUD : MonoBehaviour
 {
@@ -12,13 +14,37 @@ public class HUD : MonoBehaviour
     public float timeRemaining = 15*60;
     public bool timerIsRunning = false;
 
+    private float eliminationPopupTime;
+    private bool eliminationPopupShowing = false;
+
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private GameObject leaderboardUI;
+    [SerializeField] private GameObject defeatScreen;
+    [SerializeField] private GameObject victoryScreen;
+    [SerializeField] private GameObject eliminationPopup;
     [SerializeField] private TextMeshProUGUI timer;
+
+    private AudioManager audioManager;
+
+    public static HUD instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     private void Start()
     {
         timerIsRunning = true;
+        audioManager = AudioManager.instance;
     }
 
     // Update is called once per frame
@@ -36,11 +62,11 @@ public class HUD : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             showLeaderboard();
         }
-        else if(Input.GetKeyUp(KeyCode.Tab))
+        else if (Input.GetKeyUp(KeyCode.Tab))
         {
             hideLeaderboard();
         }
@@ -53,7 +79,7 @@ public class HUD : MonoBehaviour
                 float minutes = Mathf.FloorToInt(timeRemaining / 60);
                 float seconds = Mathf.FloorToInt(timeRemaining % 60);
 
-                timer.text = minutes + ":" + seconds;
+                timer.text = minutes.ToString().PadLeft(2, '0') + ":" + seconds.ToString().PadLeft(2, '0');
             }
             else
             {
@@ -63,8 +89,18 @@ public class HUD : MonoBehaviour
             }
         }
 
-
-
+        if(eliminationPopupShowing)
+        {
+            if (eliminationPopupTime > 0)
+            {
+                eliminationPopupTime -= Time.deltaTime;
+            }
+            else
+            {
+                eliminationPopup.SetActive(false);
+                eliminationPopupShowing = false;
+            }
+        }
 
     }
 
@@ -94,8 +130,31 @@ public class HUD : MonoBehaviour
 
     public void loadMenu()
     {
+        audioManager.interruptEndMusic();
         Time.timeScale = 1f;
         gameIsPaused = false;
         SceneManager.LoadScene("Menu");
+    }
+
+    public void showDefeat()
+    {
+        Time.timeScale = 0f;
+        defeatScreen.SetActive(true);
+        audioManager.playDefeat();
+    }
+
+    public void showVictory()
+    {
+        Time.timeScale = 0f;
+        victoryScreen.SetActive(true);
+        audioManager.playVictory();
+    }
+
+    public void showElimination(string playerName)
+    {
+        eliminationPopup.transform.Find("player_name").GetComponent<TextMeshProUGUI>().text = playerName;
+        eliminationPopup.SetActive(true);
+        eliminationPopupTime = 4f;
+        eliminationPopupShowing = true;
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4672648345955695829}
   - component: {fileID: 7669952464863923271}
   - component: {fileID: 5191211589198533385}
+  - component: {fileID: -8356310501146191510}
   m_Layer: 0
   m_Name: buckshot_pu
   m_TagString: Untagged
@@ -98,3 +99,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000002, y: 2, z: 2.0000002}
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &-8356310501146191510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7557762910791939519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e451c4b799c5e4428eb49cc4f9ad373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
