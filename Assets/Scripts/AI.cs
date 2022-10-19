@@ -35,6 +35,7 @@ public class AI : Player
 
     void Update()
     {
+        aim();
         if (path == null) return;
         if (turning)
         {

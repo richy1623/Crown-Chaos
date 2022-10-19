@@ -5872,6 +5872,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bolt: {fileID: 0}
   playerID: 0
+  ballista_top: {fileID: 0}
+  speed: 0
+  powerupIndicator: {fileID: 0}
 --- !u!54 &245737094
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8222,7 +8225,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343413453}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -83.5, y: 0, z: -50.75}
+  m_LocalPosition: {x: -125.4, y: 0, z: -100.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8395,13 +8398,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad978a593d1c270499e9a1d2facdd49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numPlayers: 4
+  numPlayers: 3
   spawnPoints:
-  - {x: 10, y: 1, z: 0}
+  - {x: 0, y: 0, z: 0}
   - {x: -18, y: 1, z: -32}
   - {x: 18, y: 1, z: -32}
   - {x: -33, y: 1, z: 18}
-  player: {fileID: 4685532686067393243, guid: 350fde7a33af057408cb33318cd13cc9, type: 3}
+  player: {fileID: 3943355415534706194, guid: 816692c408f82ed43929b36d8ba1e9ba, type: 3}
   ai: {fileID: 3943355415534706194, guid: 816692c408f82ed43929b36d8ba1e9ba, type: 3}
 --- !u!4 &350144657
 Transform:
@@ -16110,6 +16113,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &756089026 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3453395035486642326, guid: 350fde7a33af057408cb33318cd13cc9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8463989339057052974}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &756499563 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 445370, guid: a0c53a09e4a37b5409b1248ebce2c376,
@@ -35204,6 +35213,9 @@ MonoBehaviour:
   timerIsRunning: 0
   pauseMenuUI: {fileID: 1905716431}
   leaderboardUI: {fileID: 1829516829}
+  defeatScreen: {fileID: 0}
+  victoryScreen: {fileID: 0}
+  eliminationPopup: {fileID: 0}
   timer: {fileID: 1507961430}
 --- !u!1001 &1862509886
 PrefabInstance:
@@ -41830,6 +41842,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4096826083650768574, guid: a5a3e8c039580cf449b5a0b6030b7d83,
         type: 3}
+    - target: {fileID: 4335106888696583164, guid: 350fde7a33af057408cb33318cd13cc9,
+        type: 3}
+      propertyPath: ballista_top
+      value: 
+      objectReference: {fileID: 756089026}
+    - target: {fileID: 4335106888696583164, guid: 350fde7a33af057408cb33318cd13cc9,
+        type: 3}
+      propertyPath: powerupIndicator
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4685532686067393243, guid: 350fde7a33af057408cb33318cd13cc9,
         type: 3}
       propertyPath: m_Name
@@ -41839,6 +41861,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4685532686067393243, guid: 350fde7a33af057408cb33318cd13cc9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5354088964120066145, guid: 350fde7a33af057408cb33318cd13cc9,
         type: 3}
