@@ -17,6 +17,7 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        print("Running");
         ballistas = new GameObject[numPlayers];
 
         //Set spawn Points

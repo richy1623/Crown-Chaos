@@ -10,7 +10,7 @@ public class Map : MonoBehaviour
     public Transform target;
 
     public float radius;
-    private int layer = 6;
+    private int layer = 0;
 
     public Vector3[,] points;
     public Vector3[,] waypoints;
