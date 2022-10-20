@@ -33,6 +33,7 @@ public class PathProvider : MonoBehaviour
 		{
 			currentPathRequest = pathRequestQueue.Dequeue();
 			isProcessingPath = true;
+			if (pathfinding == null) print("no path");
 			pathfinding.StartFindPath(currentPathRequest.pathStart, currentPathRequest.pathEnd);
 		}
 	}

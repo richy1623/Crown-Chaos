@@ -8343,7 +8343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad978a593d1c270499e9a1d2facdd49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numPlayers: 3
+  numPlayers: 6
   spawnPoints:
   - {x: -61.55, y: 1, z: -18}
   - {x: -16.9, y: 1, z: 27.07}
@@ -8358,6 +8358,7 @@ MonoBehaviour:
   - {x: -57.5, y: 1, z: 17}
   player: {fileID: 3943355415534706194, guid: 816692c408f82ed43929b36d8ba1e9ba, type: 3}
   ai: {fileID: 3943355415534706194, guid: 816692c408f82ed43929b36d8ba1e9ba, type: 3}
+  difficulty: 3
 --- !u!4 &350144657
 Transform:
   m_ObjectHideFlags: 0
@@ -25609,7 +25610,7 @@ MonoBehaviour:
   terrain: {fileID: 343413455}
   playertrans: {fileID: 1702528630}
   target: {fileID: 0}
-  radius: 0.8
+  radius: 1
   width: 200
   height: 100
   w: 0

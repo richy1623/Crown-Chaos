@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    protected void Shoot()
+    protected bool Shoot()
     {
         //Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles+new Vector3(0, 90, 90))).GetComponent<Bolt>().setPlayer(playerID);
         if (numBolts >= 1 && reload >=1)
@@ -88,7 +88,9 @@ public class Player : MonoBehaviour
             Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles)).GetComponent<Bolt>().setPlayer(playerID);
             numBolts--;
             reload = 0;
+            return true;
         }
+        return false;
     }
 
     protected void Reload()

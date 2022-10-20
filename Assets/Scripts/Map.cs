@@ -104,16 +104,29 @@ public class Map : MonoBehaviour
         //print(x + " " + y);
         Node n = grid[x, y];
         if (n.valid) return n.pos;
-        for (; x < w; x++)
+        for (int i = x; i < w; i++)
         {
-            for (y=0; y < h; y++)
+            for (int j = y; j < h; j++)
             {
-               n = grid[x, y];
-               if (n.valid) return n.pos;
+                n = grid[i, j];
+                if (n.valid) return n.pos;
             }
-            for (y = h-1; y > 0; y--)
+            for (int j = y; j > 0; j--)
             {
-                n = grid[x, y];
+                n = grid[i, j];
+                if (n.valid) return n.pos;
+            }
+        }
+        for (int i = x; i > 0; i--)
+        {
+            for (int j = y; j < h; j++)
+            {
+                n = grid[i, j];
+                if (n.valid) return n.pos;
+            }
+            for (int j = y; j > 0; j--)
+            {
+                n = grid[i, j];
                 if (n.valid) return n.pos;
             }
         }

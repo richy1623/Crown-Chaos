@@ -12,7 +12,9 @@ public class Spawner : MonoBehaviour
     private int spawnCounter;
 
     public GameObject player;
+
     public GameObject ai;
+    public int difficulty;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +33,10 @@ public class Spawner : MonoBehaviour
         for (int i = 1; i < numPlayers; i++)
         {
             ballistas[i] = Instantiate(ai);
-            ballistas[i].GetComponent<Player>().spawn(spawnPoints[spawnCounter++]);
+            AI component = (AI) ballistas[i].GetComponent<Player>();
+            component.storeLocations(ballistas);
+            component.setDifficulty(difficulty);
+            component.spawn(spawnPoints[spawnCounter++]);
             if (spawnCounter >= spawnPoints.Length) spawnCounter = 0;
         }
 
