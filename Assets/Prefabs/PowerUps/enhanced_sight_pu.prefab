@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6716465210508726806}
   - component: {fileID: -4828364647971917307}
   - component: {fileID: 2702492829149531246}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: enhanced_sight_pu
   m_TagString: Powerup
   m_Icon: {fileID: 0}

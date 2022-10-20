@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7669952464863923271}
   - component: {fileID: 5191211589198533385}
   - component: {fileID: -8356310501146191510}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: buckshot_pu
   m_TagString: Powerup
   m_Icon: {fileID: 0}

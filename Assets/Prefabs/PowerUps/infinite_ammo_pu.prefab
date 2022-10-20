@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7069820617081320435}
   - component: {fileID: 6989414883703177950}
   - component: {fileID: -5571611895474490363}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: infinite_ammo_pu
   m_TagString: Powerup
   m_Icon: {fileID: 0}
