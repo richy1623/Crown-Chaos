@@ -6046,7 +6046,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec0e973048cadf4fb304da180d10e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reloadTime: 3
   bolt: {fileID: 0}
+  numBolts: 0
   playerID: 0
   ballista_top: {fileID: 0}
   speed: 0
@@ -8343,16 +8345,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numPlayers: 3
   spawnPoints:
-  - {x: 0, y: 0, z: 0}
-  - {x: -18, y: 1, z: -32}
-  - {x: 18, y: 1, z: -32}
-  - {x: -33, y: 1, z: 18}
-  - {x: -33, y: 1, z: 18}
-  - {x: -33, y: 1, z: 18}
-  - {x: -33, y: 1, z: 18}
-  - {x: -33, y: 1, z: 18}
-  - {x: -33, y: 1, z: 18}
-  - {x: -33, y: 1, z: 18}
+  - {x: -61.55, y: 1, z: -18}
+  - {x: -16.9, y: 1, z: 27.07}
+  - {x: 37.2, y: 1, z: -32.2}
+  - {x: -37.8, y: 1, z: 0}
+  - {x: 34.25, y: 1, z: -3.2}
+  - {x: 72.6, y: 1, z: 2.35}
+  - {x: 62, y: 1, z: 22.35}
+  - {x: 66.6, y: 1, z: -21.59}
+  - {x: 37.71, y: 1, z: 22.66}
+  - {x: -22.35, y: 1, z: -32.19}
+  - {x: -57.5, y: 1, z: 17}
   player: {fileID: 3943355415534706194, guid: 816692c408f82ed43929b36d8ba1e9ba, type: 3}
   ai: {fileID: 3943355415534706194, guid: 816692c408f82ed43929b36d8ba1e9ba, type: 3}
 --- !u!4 &350144657
@@ -8368,7 +8371,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &354289577
 PrefabInstance:
@@ -25624,7 +25627,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1286916465
 GameObject:
@@ -31204,7 +31207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec0e973048cadf4fb304da180d10e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reloadTime: 3
   bolt: {fileID: 0}
+  numBolts: 0
   playerID: 0
   ballista_top: {fileID: 0}
   speed: 0
@@ -45915,7 +45920,7 @@ Transform:
   - {fileID: 4601071665491552897}
   - {fileID: 1640349185}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2176409645329580403
 Transform:
@@ -45965,7 +45970,7 @@ Transform:
   - {fileID: 1958524135}
   - {fileID: 2068020479}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2477469597218003035
 PrefabInstance:

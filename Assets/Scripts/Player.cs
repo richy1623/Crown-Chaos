@@ -5,9 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static int numberOfPlayers = 0;
+    public float reloadTime = 3f;
 
     public GameObject bolt;
-    protected float numBolts;
+    public float numBolts;
+    protected float reload;
 
     public int playerID;
     private float forwardInput;
@@ -32,6 +34,8 @@ public class Player : MonoBehaviour
         playerID = numberOfPlayers++;
         hasPowerup = false;
         speed = 5.0f;
+        numBolts = 5f;
+        reload = 1f;
         timedPowers = new Dictionary<string, int>(){
             { "enhanced_sight_pu", 10 },
             { "infinite_ammo_pu", 10 },
@@ -57,6 +61,7 @@ public class Player : MonoBehaviour
     {
         aim();
         aimAssist();
+        Reload();
         forwardInput = Input.GetAxis("Vertical");
         yawInput = Input.GetAxis("Horizontal");
 
@@ -78,7 +83,19 @@ public class Player : MonoBehaviour
     protected void Shoot()
     {
         //Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles+new Vector3(0, 90, 90))).GetComponent<Bolt>().setPlayer(playerID);
-        Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles)).GetComponent<Bolt>().setPlayer(playerID);
+        if (numBolts >= 1 && reload >=1)
+        {
+            Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles)).GetComponent<Bolt>().setPlayer(playerID);
+            numBolts--;
+            reload = 0;
+        }
+    }
+
+    protected void Reload()
+    {
+        numBolts += 1/reloadTime * Time.deltaTime;
+        if (numBolts > 5) numBolts = 5;
+        reload += Time.deltaTime;
     }
 
     private void FixedUpdate()
