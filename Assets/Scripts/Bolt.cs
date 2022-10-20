@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bolt : MonoBehaviour
 {
-    public static event Action OnPlayerHit;
+    public static event Action<int, int> OnPlayerHit;
 
     private static int MAX_BOUNCES=10;
 
@@ -51,7 +51,7 @@ public class Bolt : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        print("Collide");
+        //print("Collide");
         if (collision.gameObject.tag == "Wall")
         {
             wallHitSFX.Play();
@@ -81,10 +81,10 @@ public class Bolt : MonoBehaviour
 
     private void HitPlayer(GameObject playerObject)
     {
-        Player player = playerObject.GetComponent<Player>();
-        if (player.playerID == playerID && bounces == MAX_BOUNCES)  return;
-        OnPlayerHit?.Invoke();
-        print("hit player "+ player.playerID);
+        Player hitplayer = playerObject.GetComponent<Player>();
+        if (hitplayer.playerID == playerID && bounces == MAX_BOUNCES)  return;
+        OnPlayerHit?.Invoke(playerID, hitplayer.playerID);
+        //print(playerID + " hit player " + hitplayer.playerID);
         Destroy(gameObject);
     }
 

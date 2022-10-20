@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static event Action<int> LoadPlayer;
+
     public static int numberOfPlayers = 0;
     public float reloadTime = 3f;
 
@@ -58,6 +61,18 @@ public class Player : MonoBehaviour
         }
 
         powerupSpawner = PowerupSpawner.instance;
+
+        LoadPlayer?.Invoke(playerID);
+    }
+
+    private void OnEnable()
+    {
+        Bolt.OnPlayerHit += CheckHit;
+    }
+
+    private void OnDisable()
+    {
+        Bolt.OnPlayerHit -= CheckHit;
     }
 
     // Update is called once per frame
@@ -95,6 +110,15 @@ public class Player : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    void CheckHit(int shooter, int hit)
+    {
+        if (hit == playerID)
+        {
+            if (!this.GetType().IsSubclassOf(typeof(Player))) return;
+            Destroy(gameObject);
+        }
     }
 
     protected void Reload()
