@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
 
     private GameObject[] aimShperes;
 
+    private PowerupSpawner powerupSpawner;
+
 
     // Start is called before the first frame update
     protected void Start()
@@ -54,6 +56,8 @@ public class Player : MonoBehaviour
                 DestroyImmediate(aimShperes[i].GetComponent<Collider>());
             }
         }
+
+        powerupSpawner = PowerupSpawner.instance;
     }
 
     // Update is called once per frame
@@ -118,6 +122,7 @@ public class Player : MonoBehaviour
         {
             hasPowerup = true;
             powerupIndicator.SetActive(true);
+            powerupSpawner.spawnPowerup(other.gameObject.transform.position);
             Destroy(other.gameObject);
             int indexPU = other.ToString().IndexOf("_pu");
             power = other.ToString().Substring(0, indexPU + 3).Trim();
