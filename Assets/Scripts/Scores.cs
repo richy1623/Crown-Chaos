@@ -13,6 +13,11 @@ public class Scores : MonoBehaviour
         leaderboard = new Leaderboard();
     }
 
+    public String getLeaderboard()
+    {
+        return leaderboard.ToString();
+    }
+
     private void OnEnable()
     {
         Player.LoadPlayer += LoadPlayer;
