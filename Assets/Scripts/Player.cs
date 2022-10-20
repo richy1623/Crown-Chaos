@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public static int numberOfPlayers = 0;
 
     public GameObject bolt;
+    protected float numBolts;
 
     public int playerID;
     private float forwardInput;
@@ -20,6 +21,8 @@ public class Player : MonoBehaviour
     private string power;
     enum botlPowers {buckshot_pu, ghost_bolt_pu};
     Dictionary<string, int> timedPowers;
+
+    private GameObject[] aimShperes;
 
 
     // Start is called before the first frame update
@@ -35,16 +38,25 @@ public class Player : MonoBehaviour
             { "invincibility_pu", 7 },
             { "speed_boost_pu", 8 } };
         aimDirection = Vector3.zero;
-        /*if(this is Player and typeof(this).IsSubclassOf(typeof(Player))
+        if (this is Player && !this.GetType().IsSubclassOf(typeof(Player)))
         {
-            print("true");
-        }*/
+            aimShperes = new GameObject[5];
+            //GameObject aimSphere = 
+            //aimSphere.transform.localScale = Vector3.one;
+            for (int i=0; i<5; i++)
+            {
+                aimShperes[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                aimShperes[i].transform.localScale = Vector3.one*0.5f;
+                DestroyImmediate(aimShperes[i].GetComponent<Collider>());
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         aim();
+        aimAssist();
         forwardInput = Input.GetAxis("Vertical");
         yawInput = Input.GetAxis("Horizontal");
 
@@ -132,14 +144,15 @@ public class Player : MonoBehaviour
 
     void aimAssist()
     {
-        Ray ray = new Ray(transform.position, ballista_top.rotation.eulerAngles);
+        Ray ray = new Ray(transform.position, ballista_top.forward);
         RaycastHit raycastHit;
-        Physics.Raycast(ray, out raycastHit, 10f);
-        for (float i = 1; i <= raycastHit.distance; i += raycastHit.distance / 10)
+        Physics.Raycast(ray, out raycastHit);
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
+        //int orbs = (int) Mathf.Clamp(raycastHit.distance/4, 3, 10);
+        float distance = raycastHit.distance / 5;
+        for (int i = 0; i < 5; i++)
         {
-            GameObject mySphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            mySphere.transform.position = transform.position + ballista_top.rotation.eulerAngles * i;
-            mySphere.transform.localScale = Vector3.one;
+            aimShperes[i].transform.position = ray.origin + ray.direction * distance * (i+1);
         }
     }
 }

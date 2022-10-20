@@ -105,7 +105,9 @@ public class AI : Player
         }
         else
         {
+            //TODO move into update loop
             moving = false;
+            print(playerID);
             getPath();
         }
     }

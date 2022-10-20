@@ -17,8 +17,8 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        print("Running");
         ballistas = new GameObject[numPlayers];
+        if (spawnPoints==null || ballistas.Length > spawnPoints.Length) return;
 
         //Set spawn Points
         spawnCounter = 0;
@@ -37,12 +37,6 @@ public class Spawner : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void respawn(int id)
     {
         for (int i = 0; i < numPlayers; i++)
@@ -57,9 +51,15 @@ public class Spawner : MonoBehaviour
 
     private int findFreeSpawnPoint()
     {
-        //TODO: find a good point
         if (spawnCounter >= spawnPoints.Length) spawnCounter = 0;
+        Collider[] colliders = Physics.OverlapSphere(spawnPoints[spawnCounter], 10);
         return spawnCounter++;
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject.tag == "Player") return spawnCounter++;
+        }
+        spawnCounter++;
+        return findFreeSpawnPoint();
     }
 
     void OnDrawGizmosSelected()
