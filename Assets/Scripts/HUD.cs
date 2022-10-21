@@ -25,6 +25,7 @@ public class HUD : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timer;
 
     private AudioManager audioManager;
+    private Leaderboard leaderboard;
 
     public static HUD instance;
 
@@ -45,6 +46,7 @@ public class HUD : MonoBehaviour
     {
         timerIsRunning = true;
         audioManager = AudioManager.instance;
+        leaderboard = Leaderboard.Instance;
     }
 
     // Update is called once per frame
@@ -86,6 +88,7 @@ public class HUD : MonoBehaviour
                 Debug.Log("Times up");
                 timeRemaining = 0;
                 timerIsRunning = false;
+                leaderboard.endGame();
             }
         }
 
@@ -136,16 +139,18 @@ public class HUD : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-    public void showDefeat()
+    public void showDefeat(string name, int elims)
     {
         Time.timeScale = 0f;
+        defeatScreen.transform.Find("defeat_status").GetComponent<TextMeshProUGUI>().text = name + " won with " + elims + " eliminations";
         defeatScreen.SetActive(true);
         audioManager.playDefeat();
     }
 
-    public void showVictory()
+    public void showVictory(int elims)
     {
         Time.timeScale = 0f;
+        victoryScreen.transform.Find("victory_status").GetComponent<TextMeshProUGUI>().text = "You won with " + elims + " eliminations";
         victoryScreen.SetActive(true);
         audioManager.playVictory();
     }

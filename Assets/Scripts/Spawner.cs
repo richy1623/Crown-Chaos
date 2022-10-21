@@ -16,6 +16,11 @@ public class Spawner : MonoBehaviour
     public GameObject ai;
     public int difficulty;
 
+    private string[] NAMES = new string[]
+    {
+        "Henry", "Ariana", "Arthur", "Eleanor", "Baird", "Muriel", "Charles", "Ruth", "Theo"
+    };
+
     // Start is called before the first frame update
     void Start()
     {

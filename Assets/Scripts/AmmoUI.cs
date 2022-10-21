@@ -57,7 +57,7 @@ public class AmmoUI : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !HUD.gameIsPaused)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !HUD.gameIsPaused && !reloading)
         {
             reload();
         }

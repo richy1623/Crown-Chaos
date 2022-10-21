@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RotatePowerup : MonoBehaviour
 {
-    private float rotateSpeed = 0.3f;
+    private float rotateSpeed = 1f;
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         transform.Rotate(0, rotateSpeed, 0, Space.World);    
     }

@@ -19,6 +19,9 @@ public class Leaderboard : MonoBehaviour
 
     const float ENTRY_HEIGHT = 70f;
     const float CONDENSED_ENTRY_HEIGHT = 45f;
+    const int WINNING_ELIMS = 30;
+
+    private HUD hud;
 
     public static Leaderboard _instance;
 
@@ -35,6 +38,8 @@ public class Leaderboard : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        hud = HUD.instance;
 
         //DontDestroyOnLoad(gameObject);
 
@@ -87,7 +92,13 @@ public class Leaderboard : MonoBehaviour
     public void incrementLeaderboardItemEliminations(int playerId)
     {
         int itemIndex = leaderboardItems.FindIndex(l => l.getPlayerId() == playerId);
-        leaderboardItems[itemIndex].setPlayerEliminations(leaderboardItems[itemIndex].getPlayerEliminations() + 1);
+        int elims = leaderboardItems[itemIndex].getPlayerEliminations();
+        leaderboardItems[itemIndex].setPlayerEliminations(elims + 1);
+
+        if (elims >= WINNING_ELIMS)
+        {
+            endGame();
+        }
         RefreshLeaderboard();
     }
 
@@ -138,5 +149,18 @@ public class Leaderboard : MonoBehaviour
 
         return pos;
             
+    }
+
+    public void endGame()
+    {
+        LeaderboardItem topPlayer = leaderboardItems[0];
+        if (topPlayer.getPlayerId() == 0) 
+        {
+            hud.showVictory(topPlayer.getPlayerEliminations());
+        }
+        else 
+        {
+            hud.showDefeat(topPlayer.getPlayerName(), topPlayer.getPlayerEliminations());
+        }
     }
 }

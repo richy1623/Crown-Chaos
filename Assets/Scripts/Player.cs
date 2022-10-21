@@ -14,7 +14,11 @@ public class Player : MonoBehaviour
     public float numBolts;
     protected float reload;
 
+    public AudioSource boltShootSFX;
+    public ParticleSystem blastEffect;
+
     public int playerID;
+    public string playerName;
     private float forwardInput;
     private float yawInput;
     protected Rigidbody rigidBody;
@@ -28,6 +32,7 @@ public class Player : MonoBehaviour
     Dictionary<string, int> timedPowers;
 
     private GameObject[] aimShperes;
+    private AudioManager audioManager;
 
     private PowerupSpawner powerupSpawner;
 
@@ -35,6 +40,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     protected void Start()
     {
+        audioManager = AudioManager.instance;
         rigidBody = GetComponent<Rigidbody>();
         playerID = numberOfPlayers++;
         hasPowerup = false;
@@ -87,7 +93,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && !HUD.gameIsPaused)
         {
             Shoot();
-            AudioManager.instance.Play("bolt_fire");
         }
         powerupIndicator.transform.position = transform.position;
 
@@ -105,6 +110,7 @@ public class Player : MonoBehaviour
         if (numBolts >= 1 && reload >=1)
         {
             Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles)).GetComponent<Bolt>().setPlayer(playerID);
+            boltShootSFX.Play();
             numBolts--;
             reload = 0;
             return true;
@@ -117,6 +123,7 @@ public class Player : MonoBehaviour
         if (hit == playerID)
         {
             if (!this.GetType().IsSubclassOf(typeof(Player))) return;
+            Instantiate(blastEffect, gameObject.transform.position, gameObject.transform.rotation).Play();
             Destroy(gameObject);
         }
     }
@@ -146,6 +153,7 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Powerup"))
         {
+            audioManager.Play("pickup_powerup");
             hasPowerup = true;
             powerupIndicator.SetActive(true);
             powerupSpawner.spawnPowerup(other.gameObject.transform.position);
@@ -203,4 +211,15 @@ public class Player : MonoBehaviour
             aimShperes[i].transform.position = ray.origin + ray.direction * distance * (i+1);
         }
     }
+
+    public void setName(string name)
+    {
+        playerName = name;
+    }
+
+    public string getName()
+    {
+        return playerName;
+    }
+
 }
