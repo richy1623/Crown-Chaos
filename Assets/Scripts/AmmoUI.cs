@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +9,12 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] private Image timerFill;
     [SerializeField] private GameObject disabledOverlay;
     [SerializeField] private GameObject staticBolt;
+    [SerializeField] private TextMeshProUGUI numBoltsText;
 
     private float reloadDuration;
     private float remainingDuration;
     private bool reloading;
+    private int numBolts;
 
     public static AmmoUI instance;
     private void Awake()
@@ -26,7 +29,7 @@ public class AmmoUI : MonoBehaviour
             return;
         }
 
-        reloadDuration = 2f;
+        reloadDuration = 1f;
         remainingDuration = 0f;
         reloading = false;
     }
@@ -44,7 +47,6 @@ public class AmmoUI : MonoBehaviour
         {
             if (remainingDuration > 0)
             {
-                remainingDuration -= Time.deltaTime;
                 timerFill.fillAmount = Mathf.InverseLerp(0, reloadDuration, remainingDuration);
 
             }
@@ -56,6 +58,8 @@ public class AmmoUI : MonoBehaviour
                 timerFill.fillAmount = 1;
             }
         }
+
+        numBoltsText.text = "" + numBolts;
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && !HUD.gameIsPaused && !reloading)
         {
@@ -69,5 +73,20 @@ public class AmmoUI : MonoBehaviour
         disabledOverlay.SetActive(true);
         remainingDuration = reloadDuration;
         reloading = true;
+    }
+
+    public bool isReloading()
+    {
+        return reloading;
+    }
+
+    public void setRemainingDuration(float duration)
+    {
+        remainingDuration = duration;
+    }
+
+    public void setNumberBolts(int bolts)
+    {
+        numBolts = bolts;
     }
 }

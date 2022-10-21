@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
 
     public GameObject bolt;
     public float numBolts;
+    private int prevBolts;
     protected float reload;
 
     public AudioSource boltShootSFX;
@@ -35,11 +36,13 @@ public class Player : MonoBehaviour
     private AudioManager audioManager;
 
     private PowerupSpawner powerupSpawner;
+    private AmmoUI ammoUI;
 
 
     // Start is called before the first frame update
     protected void Start()
     {
+        ammoUI = AmmoUI.instance;
         audioManager = AudioManager.instance;
         rigidBody = GetComponent<Rigidbody>();
         playerID = numberOfPlayers++;
@@ -87,6 +90,7 @@ public class Player : MonoBehaviour
         aim();
         aimAssist();
         Reload();
+        updateAmmoUI();
         forwardInput = Input.GetAxis("Vertical");
         yawInput = Input.GetAxis("Horizontal");
 
@@ -94,6 +98,7 @@ public class Player : MonoBehaviour
         {
             Shoot();
         }
+
         powerupIndicator.transform.position = transform.position;
 
         Ray ray  = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -133,6 +138,15 @@ public class Player : MonoBehaviour
         numBolts += 1/reloadTime * Time.deltaTime;
         if (numBolts > 5) numBolts = 5;
         reload += Time.deltaTime;
+    }
+
+    private void updateAmmoUI()
+    {
+        float remainingDuration = 1f - reload;
+        ammoUI.setRemainingDuration(remainingDuration);
+
+        int bolts = (int) Math.Floor(numBolts);
+        ammoUI.setNumberBolts(bolts);
     }
 
     private void FixedUpdate()

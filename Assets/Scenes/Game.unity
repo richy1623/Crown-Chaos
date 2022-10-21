@@ -31551,6 +31551,7 @@ MonoBehaviour:
   timerFill: {fileID: 693931373}
   disabledOverlay: {fileID: 1124612495}
   staticBolt: {fileID: 1309384190}
+  numBoltsText: {fileID: 1623726633}
 --- !u!114 &1474854094
 MonoBehaviour:
   m_ObjectHideFlags: 0
