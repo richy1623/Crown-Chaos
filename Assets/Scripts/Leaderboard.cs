@@ -40,33 +40,34 @@ public class Leaderboard : MonoBehaviour
         }
 
         hud = HUD.instance;
-
+        leaderboardItems = new List<LeaderboardItem>();
         //DontDestroyOnLoad(gameObject);
+    }
 
-        leaderboardEntry.gameObject.SetActive(false);
-        leaderboardItems = DummyData.players;
-        leaderboardItems.Sort();
+    private void Start()
+    {
+        
+    }
 
-        leaderboardEntryTransformList = new List<Transform>();
+    private void OnEnable()
+    {
+        Bolt.OnPlayerHit += HitPlayer;
+    }
 
-        for (int i = 0; i < leaderboardItems.Count; i++)
+    private void OnDisable()
+    {
+        Bolt.OnPlayerHit -= HitPlayer;
+    }
+
+    private void HitPlayer(int shooter, int hit)
+    {
+        if (shooter != hit)
         {
-            Transform entryTransform = Instantiate(leaderboardEntry, leaderboardContainer);
-            RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-            entryRectTransform.anchoredPosition = new Vector2(0, -ENTRY_HEIGHT * i);
-            entryTransform.gameObject.SetActive(true);
-
-            int position = i + 1;
-
-            entryTransform.Find("positionText").GetComponent<TextMeshProUGUI>().text = "" + position;
-            entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().text = leaderboardItems[i].getPlayerName();
-            entryTransform.Find("eliminationsText").GetComponent<TextMeshProUGUI>().text = "" + leaderboardItems[i].getPlayerEliminations();
-            leaderboardEntryTransformList.Add(entryTransform);
-
-            if (leaderboardItems[i].getPlayerId() == 0)
-            {
-                updateCondensedLeaderboard(i);  
-            }
+            incrementLeaderboardItemEliminations(shooter, 1);
+        }
+        else
+        {
+            incrementLeaderboardItemEliminations(shooter, -1);
         }
     }
 
@@ -89,11 +90,15 @@ public class Leaderboard : MonoBehaviour
         }
     }
 
-    public void incrementLeaderboardItemEliminations(int playerId)
+    public void incrementLeaderboardItemEliminations(int playerId, int amount)
     {
         int itemIndex = leaderboardItems.FindIndex(l => l.getPlayerId() == playerId);
+        for(int i = 0; i < leaderboardItems.Count; i++)
+        {
+            Debug.Log(playerId + " : " + leaderboardItems[i].getPlayerId());
+        }
         int elims = leaderboardItems[itemIndex].getPlayerEliminations();
-        leaderboardItems[itemIndex].setPlayerEliminations(elims + 1);
+        leaderboardItems[itemIndex].setPlayerEliminations(elims + amount);
 
         if (elims >= WINNING_ELIMS)
         {
@@ -104,7 +109,7 @@ public class Leaderboard : MonoBehaviour
 
     void updateCondensedLeaderboard(int i)
     {
-        if (i > 0)
+        if (i > 0 && i < leaderboardItems.Count - 1)
         {
             condensedPlayerEntry.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
             condensedOtherEntry1.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, CONDENSED_ENTRY_HEIGHT);
@@ -115,7 +120,7 @@ public class Leaderboard : MonoBehaviour
             condensedPlayerEntry.text = getPositionString(i + 1) + " - " + leaderboardItems[i].getPlayerEliminations() + " Eliminations";
             condensedOtherEntry2.text = getPositionString(i + 2) + " - " + leaderboardItems[i + 1].getPlayerEliminations() + " Eliminations";
         }
-        else
+        else if(i == 0)
         {
             condensedPlayerEntry.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, CONDENSED_ENTRY_HEIGHT);
             condensedOtherEntry1.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
@@ -124,6 +129,16 @@ public class Leaderboard : MonoBehaviour
             condensedPlayerEntry.text = getPositionString(i + 1) + " - " + leaderboardItems[i].getPlayerEliminations() + " Eliminations";
             condensedOtherEntry1.text = getPositionString(i + 2) + " - " + leaderboardItems[i + 1].getPlayerEliminations() + " Eliminations";
             condensedOtherEntry2.text = getPositionString(i + 3) + " - " + leaderboardItems[i + 2].getPlayerEliminations() + " Eliminations";
+        }
+        else
+        {
+            condensedPlayerEntry.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -CONDENSED_ENTRY_HEIGHT);
+            condensedOtherEntry1.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, CONDENSED_ENTRY_HEIGHT);
+            condensedOtherEntry2.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+
+            condensedPlayerEntry.text = getPositionString(i + 1) + " - " + leaderboardItems[i].getPlayerEliminations() + " Eliminations";
+            condensedOtherEntry1.text = getPositionString(i - 1) + " - " + leaderboardItems[i - 2].getPlayerEliminations() + " Eliminations";
+            condensedOtherEntry2.text = getPositionString(i) + " - " + leaderboardItems[i - 1].getPlayerEliminations() + " Eliminations";
         }
     }
 
@@ -161,6 +176,41 @@ public class Leaderboard : MonoBehaviour
         else 
         {
             hud.showDefeat(topPlayer.getPlayerName(), topPlayer.getPlayerEliminations());
+        }
+    }
+
+    public void setLeaderboardItems(GameObject[] players)
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            Player player = players[i].GetComponent<Player>();
+            LeaderboardItem item = new LeaderboardItem(player.playerID, player.playerName, 0);
+            leaderboardItems.Add(item);
+        }
+
+        leaderboardEntry.gameObject.SetActive(false);
+        leaderboardItems.Sort();
+
+        leaderboardEntryTransformList = new List<Transform>();
+
+        for (int i = 0; i < leaderboardItems.Count; i++)
+        {
+            Transform entryTransform = Instantiate(leaderboardEntry, leaderboardContainer);
+            RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+            entryRectTransform.anchoredPosition = new Vector2(0, -ENTRY_HEIGHT * i);
+            entryTransform.gameObject.SetActive(true);
+
+            int position = i + 1;
+
+            entryTransform.Find("positionText").GetComponent<TextMeshProUGUI>().text = "" + position;
+            entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().text = leaderboardItems[i].getPlayerName();
+            entryTransform.Find("eliminationsText").GetComponent<TextMeshProUGUI>().text = "" + leaderboardItems[i].getPlayerEliminations();
+            leaderboardEntryTransformList.Add(entryTransform);
+
+            if (leaderboardItems[i].getPlayerId() == 0)
+            {
+                updateCondensedLeaderboard(i);
+            }
         }
     }
 }

@@ -121,14 +121,12 @@ public class AudioManager : MonoBehaviour
             bgMusic[bgMusic.Length - 1].source.Stop();
             bgMusic[bgMusicIndex].source.UnPause();
             musicPaused = false;
-            Debug.Log("FALSE");
         }
         else if (bgMusic[bgMusic.Length - 2].source.isPlaying && musicPaused)
         {
             bgMusic[bgMusic.Length - 2].source.Stop();
             bgMusic[bgMusicIndex].source.UnPause();
             musicPaused = false;
-            Debug.Log("FALSE");
         }
     }
 }

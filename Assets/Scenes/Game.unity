@@ -37855,50 +37855,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 095f5c407cf669e4dad897fa1069ab69, type: 3}
---- !u!1 &1793570948
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1793570950}
-  - component: {fileID: 1793570949}
-  m_Layer: 0
-  m_Name: Scores
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1793570949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793570948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5febe0832f47a9e428cc9a7eb766eb83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1793570950
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793570948}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.35443, y: 14.207333, z: -8.860564}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 20
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1797327702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 497570, guid: 99a48108c5a1932488c06e519f6097f4,
@@ -39808,7 +39764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ac93b96e406794ab3b0725a8229a96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeRemaining: 900
+  timeRemaining: 600
   timerIsRunning: 0
   pauseMenuUI: {fileID: 1905716431}
   leaderboardUI: {fileID: 1829516829}
@@ -40344,7 +40300,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 257
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
@@ -40421,7 +40377,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
 --- !u!1 &1870168930
 GameObject:
@@ -47697,6 +47653,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4096826083650768574, guid: a5a3e8c039580cf449b5a0b6030b7d83,
         type: 3}
+    - target: {fileID: 4335106888696583164, guid: 350fde7a33af057408cb33318cd13cc9,
+        type: 3}
+      propertyPath: playerName
+      value: You
+      objectReference: {fileID: 0}
     - target: {fileID: 4335106888696583164, guid: 350fde7a33af057408cb33318cd13cc9,
         type: 3}
       propertyPath: ballista_top

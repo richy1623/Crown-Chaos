@@ -6949,8 +6949,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000022888, y: -14.19}
-  m_SizeDelta: {x: 716.5084, y: 344.0519}
+  m_AnchoredPosition: {x: 0.0075437, y: 40.2908}
+  m_SizeDelta: {x: 1070.4, y: 414.1415}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1423948453
 MonoBehaviour:
@@ -6972,8 +6972,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'This is text the will explain to the player how the game works and what
-    the objective of the game is. '
+  m_text: 'You are in control of a ballista in a medieval themed maze environment.
+    The aim of the game is to search the environment for enemy players and eliminate
+    them while avoiding being eliminated. You can fire bolts that will bounce off
+    the walls to eliminate other players. Be careful though as these bolts can bounce
+    back and eliminate you and you will lose a point. There are also various powerups
+    that spawn around the map that you can collect and use. Be the first to reach
+    30 kills or have the most kills when the timer runs out to win. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -7000,15 +7005,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 33
+  m_fontSizeBase: 33
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

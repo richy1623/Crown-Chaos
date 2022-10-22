@@ -16,16 +16,17 @@ public class Spawner : MonoBehaviour
     public GameObject ai;
     public int difficulty;
 
+    private Leaderboard leaderboard;
+    
     private string[] NAMES = new string[]
     {
         "Henry", "Ariana", "Arthur", "Eleanor", "Baird", "Muriel", "Charles", "Ruth", "Theo"
     };
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         ballistas = new GameObject[numPlayers];
-        if (spawnPoints==null || ballistas.Length > spawnPoints.Length) return;
+        if (spawnPoints == null || ballistas.Length > spawnPoints.Length) return;
 
         //Set spawn Points
         spawnCounter = 0;
@@ -38,13 +39,20 @@ public class Spawner : MonoBehaviour
         for (int i = 1; i < numPlayers; i++)
         {
             ballistas[i] = Instantiate(ai);
-            AI component = (AI) ballistas[i].GetComponent<Player>();
+            AI component = (AI)ballistas[i].GetComponent<Player>();
+            component.playerName = NAMES[i];
+            component.playerID = i;
             component.storeLocations(ballistas);
             component.setDifficulty(difficulty);
             component.spawn(spawnPoints[spawnCounter++]);
             if (spawnCounter >= spawnPoints.Length) spawnCounter = 0;
         }
+    }
 
+    private void Start()
+    {
+        leaderboard = Leaderboard.Instance;
+        leaderboard.setLeaderboardItems(ballistas);
     }
 
     private void respawn(int id)

@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
 
     public GameObject bolt;
     public float numBolts;
-    private int prevBolts;
     protected float reload;
 
     public AudioSource boltShootSFX;
@@ -37,7 +36,6 @@ public class Player : MonoBehaviour
 
     private PowerupSpawner powerupSpawner;
     private AmmoUI ammoUI;
-
 
     // Start is called before the first frame update
     protected void Start()
@@ -70,8 +68,6 @@ public class Player : MonoBehaviour
         }
 
         powerupSpawner = PowerupSpawner.instance;
-
-        LoadPlayer?.Invoke(playerID);
     }
 
     private void OnEnable()
@@ -167,7 +163,10 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Powerup"))
         {
-            audioManager.Play("pickup_powerup");
+            if (playerID == 0)
+            {
+                audioManager.Play("pickup_powerup");
+            }
             hasPowerup = true;
             powerupIndicator.SetActive(true);
             powerupSpawner.spawnPowerup(other.gameObject.transform.position);
