@@ -73,6 +73,7 @@ public class AI : Player
             respawnWait += Time.deltaTime;
             return;
         }
+        invunrabilityCheck();
         scout();
         aim();
         Reload();
@@ -208,10 +209,10 @@ public class AI : Player
         //targetDirection.y = 0;
         targetDirection = targetDirection.normalized;
         // The step size is equal to speed times frame time.
-        float singleStep = 15 * Time.deltaTime;
+        float singleStep = 90/difficulty * Time.deltaTime;
 
         // Rotate the forward vector towards the target direction by one step
-        Vector3 newDirection = Vector3.RotateTowards(ballista_top.forward, targetDirection, singleStep, 0.0f);
+        Vector3 newDirection = Vector3.RotateTowards(ballista_top.forward, targetDirection, singleStep, 1.0f);
         newDirection = Quaternion.Euler(0, aimRock*45, 0) * newDirection;
         aimRock += aimDir*Time.deltaTime/2f;
         if (aimRock*aimDir >= 1) aimDir *= -1;

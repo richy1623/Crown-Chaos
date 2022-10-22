@@ -81,14 +81,16 @@ public class Spawner : MonoBehaviour
 
     private int findFreeSpawnPoint()
     {
+        //print("trying");
+        spawnCounter++;
         if (spawnCounter >= spawnPoints.Length) spawnCounter = 0;
-        Collider[] colliders = Physics.OverlapSphere(spawnPoints[spawnCounter], 12);
+        Collider[] colliders = Physics.OverlapSphere(spawnPoints[spawnCounter], 12, 1<<0);
         //return spawnCounter++;
         foreach (Collider collider in colliders)
         {
             if (collider.gameObject.tag == "Player") return findFreeSpawnPoint();
         }
-        return spawnCounter++;
+        return spawnCounter;
     }
 
     void OnDrawGizmosSelected()

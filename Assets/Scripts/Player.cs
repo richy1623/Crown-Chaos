@@ -41,6 +41,9 @@ public class Player : MonoBehaviour
     public bool dead;
     public float respawnWait;
 
+    private bool isInvunrable;
+    private float invunrableDuration;
+
 
     // Start is called before the first frame update
     protected void Start()
@@ -73,6 +76,9 @@ public class Player : MonoBehaviour
 
         respawnWait = 0;
         dead = false;
+
+        isInvunrable = true;
+        invunrableDuration = 1.5f;
     }
 
     private void OnEnable()
@@ -93,6 +99,7 @@ public class Player : MonoBehaviour
             respawnWait += Time.deltaTime;
             return;
         }
+        invunrabilityCheck();
         Reload();
         updateAmmoUI();
         aim();
@@ -112,6 +119,19 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             aimDirection = hit.point;
+        }
+    }
+
+    protected void invunrabilityCheck()
+    {
+        if (isInvunrable)
+        {
+            if (invunrableDuration > 0) invunrableDuration -= Time.deltaTime;
+            else
+            {
+                isInvunrable = false;
+                gameObject.layer = 0;
+            }
         }
     }
 
@@ -163,7 +183,6 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (dead) return;
         rigidBody.transform.Rotate(0, yawInput * 2, 0, Space.Self);
         rigidBody.velocity = transform.forward * speed * forwardInput;
     }
@@ -177,9 +196,10 @@ public class Player : MonoBehaviour
         reload = 1f;
         dead = false;
         respawnWait = 0;
-        gameObject.layer = 0;
         GetComponent<Renderer>().enabled = true;
         GetComponent<Collider>().enabled = true;
+        isInvunrable = true;
+        invunrableDuration = 3f;
     }
 
     //Destroy powerup on collision
