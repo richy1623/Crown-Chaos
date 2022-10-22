@@ -37,6 +37,11 @@ public class Player : MonoBehaviour
     private PowerupSpawner powerupSpawner;
     private AmmoUI ammoUI;
 
+    public static float RESPAWN_TIME = 5;
+    public bool dead;
+    public float respawnWait;
+
+
     // Start is called before the first frame update
     protected void Start()
     {
@@ -46,8 +51,6 @@ public class Player : MonoBehaviour
         playerID = numberOfPlayers++;
         hasPowerup = false;
         speed = 5.0f;
-        numBolts = 5f;
-        reload = 1f;
         timedPowers = new Dictionary<string, int>(){
             { "enhanced_sight_pu", 10 },
             { "infinite_ammo_pu", 10 },
@@ -56,9 +59,8 @@ public class Player : MonoBehaviour
         aimDirection = Vector3.zero;
         if (this is Player && !this.GetType().IsSubclassOf(typeof(Player)))
         {
+            //Aim Assist
             aimShperes = new GameObject[5];
-            //GameObject aimSphere = 
-            //aimSphere.transform.localScale = Vector3.one;
             for (int i=0; i<5; i++)
             {
                 aimShperes[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -68,6 +70,9 @@ public class Player : MonoBehaviour
         }
 
         powerupSpawner = PowerupSpawner.instance;
+
+        respawnWait = 0;
+        dead = false;
     }
 
     private void OnEnable()
@@ -83,10 +88,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        aim();
-        aimAssist();
+        if (dead)
+        {
+            respawnWait += Time.deltaTime;
+            return;
+        }
         Reload();
         updateAmmoUI();
+        aim();
+        aimAssist();
         forwardInput = Input.GetAxis("Vertical");
         yawInput = Input.GetAxis("Horizontal");
 
@@ -123,9 +133,15 @@ public class Player : MonoBehaviour
     {
         if (hit == playerID)
         {
-            if (!this.GetType().IsSubclassOf(typeof(Player))) return;
+            //if (this.GetType().IsSubclassOf(typeof(Player))) Destroy(gameObject);
             Instantiate(blastEffect, gameObject.transform.position, gameObject.transform.rotation).Play();
-            Destroy(gameObject);
+            dead = true;
+            gameObject.layer = 7;
+            rigidBody.velocity = Vector3.zero;
+            GetComponent<Renderer>().enabled = false;
+            GetComponent<Collider>().enabled = false;
+            yawInput = 0;
+            forwardInput = 0;
         }
     }
 
@@ -147,6 +163,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (dead) return;
         rigidBody.transform.Rotate(0, yawInput * 2, 0, Space.Self);
         rigidBody.velocity = transform.forward * speed * forwardInput;
     }
@@ -156,6 +173,13 @@ public class Player : MonoBehaviour
         pos.y = 0.5f;
         transform.position = pos;
         transform.rotation = Quaternion.Euler(0, 270 - Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg, 0);
+        numBolts = 5f;
+        reload = 1f;
+        dead = false;
+        respawnWait = 0;
+        gameObject.layer = 0;
+        GetComponent<Renderer>().enabled = true;
+        GetComponent<Collider>().enabled = true;
     }
 
     //Destroy powerup on collision

@@ -34,8 +34,9 @@ public class Spawner : MonoBehaviour
 
         //Create Balistas
         //TODO set to player    
-        ballistas[0] = Instantiate(ai);
+        ballistas[0] = player;
         ballistas[0].GetComponent<Player>().spawn(spawnPoints[spawnCounter++]);
+        ballistas[0].GetComponent<Player>().playerName = "You";
         for (int i = 1; i < numPlayers; i++)
         {
             ballistas[i] = Instantiate(ai);
@@ -55,36 +56,49 @@ public class Spawner : MonoBehaviour
         leaderboard.setLeaderboardItems(ballistas);
     }
 
-    private void respawn(int id)
+    private void Update()
     {
         for (int i = 0; i < numPlayers; i++)
         {
-            Player player = ballistas[i].GetComponent<Player>();
-            if (player.playerID == id)
-            {
-                player.spawn(spawnPoints[findFreeSpawnPoint()]);
-            }
+            Player component = (Player)ballistas[i].GetComponent<Player>();
+            if (component.dead && component.respawnWait>=Player.RESPAWN_TIME) respawn(component.playerID);
+        }
+    }
+
+    private void respawn(int id)
+    {
+        if (id == 0)
+        {
+            Player player = ballistas[id].GetComponent<Player>();
+            player.spawn(spawnPoints[findFreeSpawnPoint()]);
+        }
+        else
+        {
+            AI ai = ballistas[id].GetComponent<AI>();
+            ai.spawn(spawnPoints[findFreeSpawnPoint()]);
         }
     }
 
     private int findFreeSpawnPoint()
     {
         if (spawnCounter >= spawnPoints.Length) spawnCounter = 0;
-        Collider[] colliders = Physics.OverlapSphere(spawnPoints[spawnCounter], 10);
-        return spawnCounter++;
+        Collider[] colliders = Physics.OverlapSphere(spawnPoints[spawnCounter], 12);
+        //return spawnCounter++;
         foreach (Collider collider in colliders)
         {
-            if (collider.gameObject.tag == "Player") return spawnCounter++;
+            if (collider.gameObject.tag == "Player") return findFreeSpawnPoint();
         }
-        spawnCounter++;
-        return findFreeSpawnPoint();
+        return spawnCounter++;
     }
 
     void OnDrawGizmosSelected()
     {
         // Draw a red sphere at the spawn points' position
         Gizmos.color = Color.red;
-        for(int i=0;i<spawnPoints.Length;i++)
+        for (int i = 0; i < spawnPoints.Length; i++)
             Gizmos.DrawSphere(spawnPoints[i], 1);
+        //Gizmos.color = Color.green;
+        //for (int i = 0; i < spawnPoints.Length; i++)
+            //Gizmos.DrawSphere(spawnPoints[i], 12);
     }
 }

@@ -35,11 +35,11 @@ public class AI : Player
         map = GameObject.Find("Map").GetComponent<Map>();
         originY = 0.249f;
         mindistance = 0.05f;
+        reqPath = false;
         target = map.getTarget();
         //waypoint = transform.position;
         moving = false;
         turning = true;
-        reqPath = false;
         //getPath();
         aimRock = 0;
         aimDir = 1;
@@ -49,12 +49,30 @@ public class AI : Player
         show = false;
     }
 
+    public void spawn(Vector3 pos)
+    {
+        base.spawn(pos);
+        mindistance = 0.05f;
+        reqPath = false;
+        moving = false;
+        turning = true;
+        aimRock = 0;
+        aimDir = 1;
+        direction = 1f;
+        //if (map!=null) target = map.getTarget();
+    }
+
     public void storeLocations(GameObject[] ballistas){
         this.ballistas = ballistas;
     }
 
     void Update()
     {
+        if (dead)
+        {
+            respawnWait += Time.deltaTime;
+            return;
+        }
         scout();
         aim();
         Reload();
@@ -162,7 +180,7 @@ public class AI : Player
         }
 
         Gizmos.color = Color.yellow;
-        if (!show) return;
+        //if (!show) return;
         Gizmos.DrawSphere(target, 1);
     }
 
@@ -178,12 +196,13 @@ public class AI : Player
 
     private void FixedUpdate()
     {
+        if (dead) return;
         //rigidBody.transform.Rotate(0, yawInput * 2, 0, Space.Self);
         if (!turning && moving)
         rigidBody.position = Vector3.MoveTowards(transform.position, currentWaypoint, 5 * Time.deltaTime * direction);
     }
 
-    private void aim()
+    private new void aim()
     {
         Vector3 targetDirection = transform.forward;
         //targetDirection.y = 0;
