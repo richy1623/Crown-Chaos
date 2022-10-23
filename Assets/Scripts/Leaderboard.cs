@@ -24,6 +24,8 @@ public class Leaderboard : MonoBehaviour
     private HUD hud;
     private AudioManager audioManager;
 
+    public static bool hasShield;
+
     public static Leaderboard _instance;
 
     public static Leaderboard Instance { get { return _instance; } }
@@ -43,6 +45,8 @@ public class Leaderboard : MonoBehaviour
         hud = HUD.instance;
         audioManager = AudioManager.instance;
         leaderboardItems = new List<LeaderboardItem>();
+
+        hasShield = false;
         //DontDestroyOnLoad(gameObject);
     }
 
@@ -82,9 +86,13 @@ public class Leaderboard : MonoBehaviour
         else
         {
             incrementLeaderboardItemEliminations(shooter, -1);
-            if(hit == 0)
+            if(hit == 0 && !hasShield)
             {
                 hud.showRespawning("Yourself");
+            }
+            else if (hit == 0 && hasShield)
+            {
+                hasShield = false;
             }
         }
     }

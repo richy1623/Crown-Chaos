@@ -11,7 +11,7 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] private GameObject staticBolt;
     [SerializeField] private TextMeshProUGUI numBoltsText;
 
-    private float reloadDuration;
+    public static float reloadDuration;
     private float remainingDuration;
     private bool reloading;
     private int numBolts;

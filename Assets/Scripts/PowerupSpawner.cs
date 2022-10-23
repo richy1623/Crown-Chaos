@@ -12,7 +12,7 @@ public class PowerupSpawner : MonoBehaviour
 
     [SerializeField] private GameObject[] powerups;
 
-    private const int NUM_POWERUPS = 3;
+    private const int NUM_POWERUPS = 8;
 
     private Dictionary<string, float> cumulativeProbs;
     private string FARM_KEY = "farm";

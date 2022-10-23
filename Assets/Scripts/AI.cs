@@ -31,6 +31,7 @@ public class AI : Player
 
     new void Start()
     {
+        Application.targetFrameRate = 60;
         base.Start();
         map = GameObject.Find("Map").GetComponent<Map>();
         originY = 0.249f;

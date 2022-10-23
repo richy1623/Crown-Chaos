@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public GameObject bolt;
     public float numBolts;
     protected float reload;
+    protected float reloadDuration = 1f;
 
     public AudioSource boltShootSFX;
     public ParticleSystem blastEffect;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     public float speed;
     public GameObject powerupIndicator;
     private bool hasPowerup;
+    private bool powerupActive;
     private string power;
     enum botlPowers {buckshot_pu, ghost_bolt_pu};
     Dictionary<string, int> timedPowers;
@@ -45,6 +47,10 @@ public class Player : MonoBehaviour
     private bool isInvunrable;
     private float invunrableDuration;
 
+    private bool hasShield;
+    private bool buckshot;
+    private bool ghostShot;
+
     private HUD hud;
     private PowerupUI powerupUI;
 
@@ -59,6 +65,7 @@ public class Player : MonoBehaviour
 
         rigidBody = GetComponent<Rigidbody>();
         hasPowerup = false;
+        powerupActive = false;
         speed = 5.0f;
         timedPowers = new Dictionary<string, int>(){
             { "enhanced_sight_pu", 10 },
@@ -88,6 +95,10 @@ public class Player : MonoBehaviour
         isInvunrable = true;
         invunrableDuration = 1.5f;
 
+        hasShield = false;
+        buckshot = false;
+        ghostShot = false;
+
         rigidBody.centerOfMass = Vector3.zero;
         rigidBody.inertiaTensorRotation = Quaternion.identity;
     }
@@ -100,6 +111,18 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         Bolt.OnPlayerHit -= CheckHit;
+    }
+
+    public bool isPowered()
+    {
+        if (hasPowerup) return true;
+        else return false;
+    }
+
+    public string powerType()
+    {
+        string copy = (string)power.Clone();
+        return copy;
     }
 
     // Update is called once per frame
@@ -126,6 +149,42 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && !HUD.gameIsPaused)
         {
             powerupUI.activatePowerup();
+            powerupIndicator.SetActive(true);
+            powerupActive = true;
+            if (timedPowers.ContainsKey(power))
+            {
+                if (power.Equals("speed_boost_pu"))
+                {
+                    speed = 7.5f;
+                }
+                else if (power.Equals("invincibility_pu"))
+                {
+                    hasShield = true;
+                    Leaderboard.hasShield = true;
+                }
+                else if (power.Equals("enhanced_sight_pu"))
+                {
+                    CameraFollow.enhancedSight = true;
+                }
+                else if (power.Equals("infinite_ammo_pu"))
+                {
+                    reloadTime = 0.125f;
+                    reloadDuration = 0.5f;
+                    AmmoUI.reloadDuration = 0.5f;
+                }      
+                StartCoroutine(PowerupCountdownRoutine(timedPowers[power]));
+            }   
+            else
+            {
+                if(power.Equals("buckshot_pu"))
+                {
+                    buckshot = true;
+                }    
+                else if(power.Equals("ghost_bolt_pu"))
+                {
+                    ghostShot = true;   
+                }
+            }
         }
 
         powerupIndicator.transform.position = transform.position;
@@ -154,9 +213,32 @@ public class Player : MonoBehaviour
     protected bool Shoot()
     {
         //Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles+new Vector3(0, 90, 90))).GetComponent<Bolt>().setPlayer(playerID);
-        if (numBolts >= 1 && reload >=1)
+        if (numBolts >= 1 && reload >= reloadDuration)
         {
-            Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles)).GetComponent<Bolt>().setPlayer(playerID);
+            GameObject b = Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles));
+            b.GetComponent<Bolt>().setPlayer(playerID);
+
+            if (ghostShot)
+            {
+                b.GetComponent<Rigidbody>().isKinematic = true;
+                ghostShot = false;
+                powerupUI.disablePowerup();
+                power = "";
+                hasPowerup = false;
+                powerupActive = false;
+                powerupIndicator.SetActive(false);
+            }
+            else if(buckshot)
+            {
+                Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles.x, ballista_top.eulerAngles.y + 25, ballista_top.eulerAngles.z)).GetComponent<Bolt>().setPlayer(playerID);
+                Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles.x, ballista_top.eulerAngles.y - 25, ballista_top.eulerAngles.z)).GetComponent<Bolt>().setPlayer(playerID);
+                buckshot = false;
+                powerupUI.disablePowerup();
+                power = "";
+                hasPowerup = false;
+                powerupActive = false;
+                powerupIndicator.SetActive(false);
+            }
             boltShootSFX.Play();
             numBolts--;
             reload = 0;
@@ -169,16 +251,28 @@ public class Player : MonoBehaviour
     {
         if (hit == playerID)
         {
-            //if (this.GetType().IsSubclassOf(typeof(Player))) Destroy(gameObject);
-            Instantiate(blastEffect, gameObject.transform.position, gameObject.transform.rotation).Play();
-            dead = true;
-            gameObject.layer = 7;
-            rigidBody.velocity = Vector3.zero;
-            GetComponent<Renderer>().enabled = false;
-            if (aimShperes != null) foreach (GameObject o in aimShperes) o.GetComponent<Renderer>().enabled = false;
-            GetComponent<Collider>().enabled = false;
-            yawInput = 0;
-            forwardInput = 0;
+            if(!hasShield)
+            {
+                //if (this.GetType().IsSubclassOf(typeof(Player))) Destroy(gameObject);
+                Instantiate(blastEffect, gameObject.transform.position, gameObject.transform.rotation).Play();
+                dead = true;
+                gameObject.layer = 7;
+                rigidBody.velocity = Vector3.zero;
+                GetComponent<Renderer>().enabled = false;
+                if (aimShperes != null) foreach (GameObject o in aimShperes) o.GetComponent<Renderer>().enabled = false;
+                GetComponent<Collider>().enabled = false;
+                yawInput = 0;
+                forwardInput = 0;
+            }
+            else
+            {
+                hasShield = false;
+                powerupUI.disablePowerup();
+                power = "";
+                hasPowerup = false;
+                powerupActive = false;
+                powerupIndicator.SetActive(false);
+            }
         }
     }
 
@@ -227,7 +321,7 @@ public class Player : MonoBehaviour
     //Destroy powerup on collision
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Powerup"))
+        if (other.CompareTag("Powerup") && !powerupActive)
         {
             int indexPU = other.ToString().IndexOf("_pu");
             power = other.ToString().Substring(0, indexPU + 3).Trim();
@@ -238,15 +332,10 @@ public class Player : MonoBehaviour
                 powerupUI.collectPowerup(power);
             }
             hasPowerup = true;
-            powerupIndicator.SetActive(true);
             powerupSpawner.spawnPowerup(other.gameObject.transform.position);
             Destroy(other.gameObject);
             Debug.Log(timedPowers.ContainsKey(power));
             Debug.Log(timedPowers[power]);
-            if (timedPowers.ContainsKey(power))
-                if (power.Equals("speed_boost_pu"))
-                    speed = 7.5f;
-                StartCoroutine(PowerupCountdownRoutine(timedPowers[power]));
         }
     }
 
@@ -255,8 +344,29 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         if (power.Equals("speed_boost_pu"))
+        {
             speed = 5.0f;
+        }
+        else if (power.Equals("invincibility_pu"))
+        {
+            hasShield = false;
+        } 
+        else if (power.Equals("enhanced_sight_pu"))
+        {
+            CameraFollow.enhancedSight = false;
+        }
+        else if (power.Equals("infinite_ammo_pu"))
+        {
+            reloadTime = 3f;
+            reloadDuration = 1f;
+            AmmoUI.reloadDuration = 0.5f;
+        }
+            
+
+        power = "";
         hasPowerup = false;
+        powerupActive = false;
+        powerupIndicator.SetActive(false);
     }
 
     //private void OnCollisionEnter(Collision collision) { }

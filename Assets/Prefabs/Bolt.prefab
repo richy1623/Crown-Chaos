@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b476c7f656dfcd746ae0d43eaf03a891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGhost: 0
   wallHitSFX: {fileID: 3690614545623032411}
 --- !u!54 &4096826083650768544
 Rigidbody:

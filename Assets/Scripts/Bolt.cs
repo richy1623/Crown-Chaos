@@ -13,6 +13,8 @@ public class Bolt : MonoBehaviour
     private float speed;
     private int playerID;
 
+    public bool isGhost = false;
+
     [SerializeField] private AudioSource wallHitSFX;
     //private float y;
 
@@ -52,7 +54,11 @@ public class Bolt : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //print("Collide");
-        if (collision.gameObject.tag == "Wall")
+        if (isGhost)
+        {
+            Physics.IgnoreCollision(GetComponent<Collider>(), collision.collider);
+        }
+        else if (collision.gameObject.tag == "Wall")
         {
             wallHitSFX.Play();
             Bounce(collision.contacts[0].normal);
