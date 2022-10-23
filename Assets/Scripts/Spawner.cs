@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
     
     private string[] NAMES = new string[]
     {
-        "Henry", "Ariana", "Arthur", "Eleanor", "Baird", "Muriel", "Charles", "Ruth", "Theo"
+        "Henry", "Ariana", "Arthur", "Eleanor", "Baird", "Muriel", "Charles", "Ruth", "Theo", "Archie"
     };
 
     private void Awake()
