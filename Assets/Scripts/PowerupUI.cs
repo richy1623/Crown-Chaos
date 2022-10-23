@@ -21,20 +21,21 @@ public class PowerupUI : MonoBehaviour
     [SerializeField] private Sprite speedBoostSprite;
     [SerializeField] private Sprite infiniteAmmoSprite;
 
-    public static int BUCKSHOT = 1;
-    public static int ENHANCED_SIGHT = 2;
-    public static int GHOST_BOLT = 3;
-    public static int SHIELD = 4;
-    public static int SPEED_BOOST = 5;
-    public static int INFINITE_AMMO = 6;
-    private Dictionary<int, PowerupUIItem> POWERUPS = new Dictionary<int, PowerupUIItem>();
+    public static string BUCKSHOT = "buckshot_pu";
+    public static string ENHANCED_SIGHT = "enhanced_sight_pu";
+    public static string GHOST_BOLT = "ghost_bolt_pu";
+    public static string SHIELD = "invincibility_pu";
+    public static string SPEED_BOOST = "speed_boost_pu";
+    public static string INFINITE_AMMO = "infinite_ammo_pu";
+    private Dictionary<string, PowerupUIItem> POWERUPS = new Dictionary<string, PowerupUIItem>();
 
-    private int currentPowerup = -1;
+    private string currentPowerup = "";
     private float powerupTimeRemaining;
     private bool powerupTimerActive = false;
 
     private Color goldColor = new Color32(243, 192, 36, 255);
 
+    private AudioManager audioManager;
     public static PowerupUI instance;
 
     private void Awake()
@@ -55,6 +56,8 @@ public class PowerupUI : MonoBehaviour
         POWERUPS.Add(SHIELD, new PowerupUIItem("Shield", 7, shieldSprite));
         POWERUPS.Add(SPEED_BOOST, new PowerupUIItem("Speed Boost", 8, speedBoostSprite));
         POWERUPS.Add(INFINITE_AMMO, new PowerupUIItem("Infinite Ammo", 10, infiniteAmmoSprite));
+
+        audioManager = AudioManager.instance;
     }
 
     // Start is called before the first frame update
@@ -86,7 +89,7 @@ public class PowerupUI : MonoBehaviour
         }
     }
 
-    public void collectPowerup(int powerup)
+    public void collectPowerup(string powerup)
     {
         currentPowerup = powerup;
         PowerupUIItem item = POWERUPS[powerup];
@@ -96,8 +99,9 @@ public class PowerupUI : MonoBehaviour
 
     public void activatePowerup()
     {
-        if(currentPowerup != -1)
+        if(currentPowerup != "")
         {
+            audioManager.Play("activate_powerup");
             PowerupUIItem item = POWERUPS[currentPowerup];
             activeOverlay.SetActive(true);
             powerupName.color = goldColor;
@@ -113,7 +117,7 @@ public class PowerupUI : MonoBehaviour
 
     public void disablePowerup()
     {
-        currentPowerup = -1;
+        currentPowerup = "";
         activeOverlay.SetActive(false);
         powerupName.color = Color.white;
         powerupName.text = "No Powerup";

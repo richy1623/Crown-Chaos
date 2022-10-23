@@ -22,6 +22,7 @@ public class Leaderboard : MonoBehaviour
     const int WINNING_ELIMS = 30;
 
     private HUD hud;
+    private AudioManager audioManager;
 
     public static Leaderboard _instance;
 
@@ -40,6 +41,7 @@ public class Leaderboard : MonoBehaviour
         }
 
         hud = HUD.instance;
+        audioManager = AudioManager.instance;
         leaderboardItems = new List<LeaderboardItem>();
         //DontDestroyOnLoad(gameObject);
     }
@@ -64,10 +66,26 @@ public class Leaderboard : MonoBehaviour
         if (shooter != hit)
         {
             incrementLeaderboardItemEliminations(shooter, 1);
+            if (shooter == 0)
+            {
+                audioManager.Play("elimination");
+                int itemIndex = leaderboardItems.FindIndex(l => l.getPlayerId() == hit);
+                hud.showElimination(leaderboardItems[itemIndex].getPlayerName());
+            }
+
+            if(hit == 0)
+            {
+                int itemIndex = leaderboardItems.FindIndex(l => l.getPlayerId() == shooter);
+                hud.showRespawning(leaderboardItems[itemIndex].getPlayerName());
+            }
         }
         else
         {
             incrementLeaderboardItemEliminations(shooter, -1);
+            if(hit == 0)
+            {
+                hud.showRespawning("Yourself");
+            }
         }
     }
 
@@ -93,13 +111,9 @@ public class Leaderboard : MonoBehaviour
     public void incrementLeaderboardItemEliminations(int playerId, int amount)
     {
         int itemIndex = leaderboardItems.FindIndex(l => l.getPlayerId() == playerId);
-        for(int i = 0; i < leaderboardItems.Count; i++)
-        {
-            Debug.Log(playerId + " : " + leaderboardItems[i].getPlayerId());
-        }
         int elims = leaderboardItems[itemIndex].getPlayerEliminations();
         leaderboardItems[itemIndex].setPlayerEliminations(elims + amount);
-
+     
         if (elims >= WINNING_ELIMS)
         {
             endGame();

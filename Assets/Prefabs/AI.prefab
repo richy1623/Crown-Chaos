@@ -226,7 +226,7 @@ MonoBehaviour:
     type: 3}
   dead: 0
   respawnWait: 0
-  difficulty: 3
+  difficulty: 1
   map: {fileID: 0}
   mindistance: 0
   aimRock: 0

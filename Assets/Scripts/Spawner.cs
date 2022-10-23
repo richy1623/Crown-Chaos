@@ -33,6 +33,8 @@ public class Spawner : MonoBehaviour
         //TODO Shuffle
         Shuffle<Vector3>(spawnPoints);
 
+        int d = PlayerPrefs.GetInt(OptionsMenu.DIFFICULTY_KEY) + 1;
+
         //Create Balistas
         //TODO set to player    
         ballistas[0] = player;
@@ -45,7 +47,7 @@ public class Spawner : MonoBehaviour
             component.playerName = NAMES[i];
             component.playerID = i;
             component.storeLocations(ballistas);
-            component.setDifficulty(difficulty);
+            component.setDifficulty(d);
             component.spawn(spawnPoints[spawnCounter++]);
             if (spawnCounter >= spawnPoints.Length) spawnCounter = 0;
         }

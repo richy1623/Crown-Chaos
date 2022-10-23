@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     public AudioSource boltShootSFX;
     public ParticleSystem blastEffect;
+    public Material sphereMaterial;
 
     public int playerID;
     public string playerName;
@@ -44,14 +45,19 @@ public class Player : MonoBehaviour
     private bool isInvunrable;
     private float invunrableDuration;
 
+    private HUD hud;
+    private PowerupUI powerupUI;
+
 
     // Start is called before the first frame update
     protected void Start()
     {
+        hud = HUD.instance;
         ammoUI = AmmoUI.instance;
         audioManager = AudioManager.instance;
+        powerupUI = PowerupUI.instance;
+
         rigidBody = GetComponent<Rigidbody>();
-        playerID = numberOfPlayers++;
         hasPowerup = false;
         speed = 5.0f;
         timedPowers = new Dictionary<string, int>(){
@@ -66,7 +72,9 @@ public class Player : MonoBehaviour
             aimShperes = new GameObject[5];
             for (int i=0; i<5; i++)
             {
-                aimShperes[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                sphere.GetComponent<Renderer>().material = sphereMaterial;
+                aimShperes[i] = sphere;
                 aimShperes[i].transform.localScale = Vector3.one*0.5f;
                 DestroyImmediate(aimShperes[i].GetComponent<Collider>());
             }
@@ -79,6 +87,9 @@ public class Player : MonoBehaviour
 
         isInvunrable = true;
         invunrableDuration = 1.5f;
+
+        rigidBody.centerOfMass = Vector3.zero;
+        rigidBody.inertiaTensorRotation = Quaternion.identity;
     }
 
     private void OnEnable()
@@ -110,6 +121,11 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && !HUD.gameIsPaused)
         {
             Shoot();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space) && !HUD.gameIsPaused)
+        {
+            powerupUI.activatePowerup();
         }
 
         powerupIndicator.transform.position = transform.position;
@@ -184,12 +200,16 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidBody.transform.Rotate(0, yawInput * 2, 0, Space.Self);
+        transform.Rotate(0, yawInput * 2, 0, Space.Self);
         rigidBody.velocity = transform.forward * speed * forwardInput;
     }
 
     public void spawn(Vector3 pos)
     {
+        if(playerID == 0 && hud != null)
+        {
+            hud.hideRespawning();
+        }
         pos.y = 0.5f;
         transform.position = pos;
         transform.rotation = Quaternion.Euler(0, 270 - Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg, 0);
@@ -209,16 +229,18 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Powerup"))
         {
+            int indexPU = other.ToString().IndexOf("_pu");
+            power = other.ToString().Substring(0, indexPU + 3).Trim();
+
             if (playerID == 0)
             {
                 audioManager.Play("pickup_powerup");
+                powerupUI.collectPowerup(power);
             }
             hasPowerup = true;
             powerupIndicator.SetActive(true);
             powerupSpawner.spawnPowerup(other.gameObject.transform.position);
             Destroy(other.gameObject);
-            int indexPU = other.ToString().IndexOf("_pu");
-            power = other.ToString().Substring(0, indexPU + 3).Trim();
             Debug.Log(timedPowers.ContainsKey(power));
             Debug.Log(timedPowers[power]);
             if (timedPowers.ContainsKey(power))

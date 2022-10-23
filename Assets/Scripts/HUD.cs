@@ -22,6 +22,7 @@ public class HUD : MonoBehaviour
     [SerializeField] private GameObject defeatScreen;
     [SerializeField] private GameObject victoryScreen;
     [SerializeField] private GameObject eliminationPopup;
+    [SerializeField] private GameObject respawningPopup;
     [SerializeField] private TextMeshProUGUI timer;
 
     private AudioManager audioManager;
@@ -164,5 +165,16 @@ public class HUD : MonoBehaviour
         eliminationPopup.SetActive(true);
         eliminationPopupTime = 4f;
         eliminationPopupShowing = true;
+    }
+
+    public void showRespawning(string playerName)
+    {
+        respawningPopup.transform.Find("respawning_text").GetComponent<TextMeshProUGUI>().text = "You were eliminated by " + playerName + ", Respawning...";
+        respawningPopup.SetActive(true);
+    }
+
+    public void hideRespawning()
+    {
+        respawningPopup.SetActive(false);
     }
 }
