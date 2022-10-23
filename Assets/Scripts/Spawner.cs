@@ -31,6 +31,7 @@ public class Spawner : MonoBehaviour
         //Set spawn Points
         spawnCounter = 0;
         //TODO Shuffle
+        Shuffle<Vector3>(spawnPoints);
 
         //Create Balistas
         //TODO set to player    
@@ -81,7 +82,6 @@ public class Spawner : MonoBehaviour
 
     private int findFreeSpawnPoint()
     {
-        //print("trying");
         spawnCounter++;
         if (spawnCounter >= spawnPoints.Length) spawnCounter = 0;
         Collider[] colliders = Physics.OverlapSphere(spawnPoints[spawnCounter], 12, 1<<0);
@@ -102,5 +102,16 @@ public class Spawner : MonoBehaviour
         //Gizmos.color = Color.green;
         //for (int i = 0; i < spawnPoints.Length; i++)
             //Gizmos.DrawSphere(spawnPoints[i], 12);
+    }
+
+    private void Shuffle<T>(T[] ls)
+    {
+        for (int i = 0; i < ls.Length; i++)
+        {
+            int j = Random.Range(0, ls.Length);
+            T temp = ls[j];
+            ls[j] = ls[i];
+            ls[i] = temp;
+        }
     }
 }
