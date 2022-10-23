@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Bolt : MonoBehaviour
 {
-    public static event Action OnPlayerHit;
+    public static event Action<int, int> OnPlayerHit;
 
     private static int MAX_BOUNCES=10;
 
     private int bounces;
     private float speed;
     private int playerID;
+    private bool ghost;
+    private bool buckshot;
 
     [SerializeField] private AudioSource wallHitSFX;
     //private float y;
@@ -23,6 +25,8 @@ public class Bolt : MonoBehaviour
         bounces = MAX_BOUNCES;
         speed = 10;
         //y = transform.position.y;
+
+        Physics.IgnoreLayerCollision(7, 7);
     }
 
     private void FixedUpdate()
@@ -49,8 +53,8 @@ public class Bolt : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        print("Collide");
-        if (collision.gameObject.tag == "Wall")
+        //print("Collide");
+        if (collision.gameObject.tag == "Wall" && !ghost)
         {
             wallHitSFX.Play();
             Bounce(collision.contacts[0].normal);
@@ -60,6 +64,16 @@ public class Bolt : MonoBehaviour
             HitPlayer(collision.gameObject);
         }
         
+    }
+
+    public void activateGhost()
+    {
+        ghost = true;
+    }
+
+    public void activateBuckShot()
+    {
+        buckshot = true;
     }
 
     private void Bounce(Vector3 normal)
@@ -79,10 +93,13 @@ public class Bolt : MonoBehaviour
 
     private void HitPlayer(GameObject playerObject)
     {
-        Player player = playerObject.GetComponent<Player>();
-        if (player.playerID == playerID && bounces == MAX_BOUNCES)  return;
-        OnPlayerHit?.Invoke();
-        print("hit player "+ player.playerID);
+        Player hitplayer = playerObject.GetComponent<Player>();
+        if (hitplayer.playerID == playerID && bounces == MAX_BOUNCES)  return;
+        Debug.Log("isPowered: " + hitplayer.isPowered());
+        //if (hitplayer.isPowered())
+        //    if (hitplayer.powerType().Equals("invincibility_pu")) return;
+        OnPlayerHit?.Invoke(playerID, hitplayer.playerID);
+        //print(playerID + " hit player " + hitplayer.playerID);
         Destroy(gameObject);
     }
 

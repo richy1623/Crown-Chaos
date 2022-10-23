@@ -29,8 +29,9 @@ public class Player : MonoBehaviour
     private CamSwitch cam;
     private bool hasPowerup;
     private string power;
-    enum botlPowers {buckshot_pu, ghost_bolt_pu};
+    enum boltPowers {buckshot_pu, ghost_bolt_pu, normal};
     Dictionary<string, int> timedPowers;
+    boltPowers boltType;
 
     private GameObject[] aimShperes;
     private AudioManager audioManager;
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
         playerID = numberOfPlayers++;
         speed = 5.0f;
+        boltType = boltPowers.normal;
         timedPowers = new Dictionary<string, int>(){
             { "enhanced_sight_pu", 10 },
             { "infinite_ammo_pu", 10 },
@@ -155,7 +157,19 @@ public class Player : MonoBehaviour
     protected bool Shoot()
     {
         //Instantiate(bolt, transform.position, Quaternion.Euler(transform.eulerAngles+new Vector3(0, 90, 90))).GetComponent<Bolt>().setPlayer(playerID);
-        if (numBolts >= 1 && reload >=1)
+        if (hasPowerup && boltType.Equals(boltPowers.ghost_bolt_pu))
+        {
+            Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles)).GetComponent<Bolt>().activateGhost();
+            boltType = boltPowers.normal;
+            powerupIndicator.SetActive(false);
+        }
+        else if (hasPowerup && boltType.Equals(boltPowers.buckshot_pu))
+        {
+            Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles)).GetComponent<Bolt>().activateBuckShot();
+            boltType = boltPowers.normal;
+            powerupIndicator.SetActive(false);
+        }
+        else if (numBolts >= 1 && reload >=1)
         {
             Instantiate(bolt, transform.position, Quaternion.Euler(ballista_top.eulerAngles)).GetComponent<Bolt>().setPlayer(playerID);
             boltShootSFX.Play();
@@ -249,8 +263,14 @@ public class Player : MonoBehaviour
                     gameObject.layer = 7;
                 else if (power.Equals("enhanced_sight_pu"))
                     cam.eagleView();
+                else if (power.Equals("infinite_ammo_pu"))
+                    reloadTime = 0.125f;
                 StartCoroutine(PowerupCountdownRoutine(timedPowers[power]));
             }
+            else if (power.Equals("ghost_bolt_pu"))
+                boltType = boltPowers.ghost_bolt_pu;
+            else if (power.Equals("buck_shot_pu"))
+                boltType = boltPowers.buckshot_pu;
         }
     }
 
@@ -265,6 +285,8 @@ public class Player : MonoBehaviour
             gameObject.layer = 0;
         else if (power.Equals("enhanced_sight_pu"))
             cam.revert();
+        else if (power.Equals("infinite_ammo_pu"))
+            reloadTime = 3f;
         power = "";
         hasPowerup = false;
         powerupIndicator.SetActive(false);
