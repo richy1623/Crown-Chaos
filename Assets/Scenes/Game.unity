@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17616674, g: 0.22047815, b: 0.30280492, a: 1}
+  m_IndirectSpecularColor: {r: 0.17616487, g: 0.22047544, b: 0.30280223, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8392,17 +8392,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad978a593d1c270499e9a1d2facdd49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numPlayers: 6
+  numPlayers: 2
   spawnPoints:
   - {x: -61.55, y: 1, z: -18}
   - {x: -16.9, y: 1, z: 27.07}
-  - {x: 37.2, y: 1, z: -32.2}
+  - {x: 37.2, y: 1, z: -27.97}
   - {x: -37.8, y: 1, z: 0}
   - {x: 34.25, y: 1, z: -3.2}
   - {x: 72.6, y: 1, z: 2.35}
   - {x: 62, y: 1, z: 22.35}
   - {x: 66.6, y: 1, z: -21.59}
-  - {x: 37.71, y: 1, z: 22.66}
+  - {x: 37.71, y: 1, z: 23.77}
   - {x: -22.35, y: 1, z: -32.19}
   - {x: -57.5, y: 1, z: 17}
   player: {fileID: 3778654582548676597}
@@ -34645,7 +34645,7 @@ PrefabInstance:
     - target: {fileID: 238250558222522440, guid: e66105e3adf39d547b304e6140980948,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.5
+      value: 27.59
       objectReference: {fileID: 0}
     - target: {fileID: 238250558222522440, guid: e66105e3adf39d547b304e6140980948,
         type: 3}
@@ -47716,7 +47716,7 @@ PrefabInstance:
     - target: {fileID: 5354088964120066145, guid: 350fde7a33af057408cb33318cd13cc9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.317028
+      value: -10.47
       objectReference: {fileID: 0}
     - target: {fileID: 5354088964120066145, guid: 350fde7a33af057408cb33318cd13cc9,
         type: 3}
