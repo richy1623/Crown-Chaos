@@ -119,7 +119,7 @@ public class AI : Player
         targetDirection.y = 0;
         targetDirection = targetDirection.normalized;
         // The step size is equal to speed times frame time.
-        float singleStep = 10 * Time.deltaTime;
+        float singleStep = 100/difficulty * Time.deltaTime;
 
         // Rotate the forward vector towards the target direction by one step
         Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
