@@ -54,7 +54,12 @@ public class Bolt : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //print("Collide");
-        if (collision.gameObject.tag == "Wall" && !ghost)
+        Rigidbody rbBolt = GetComponent<Rigidbody>();
+        if (collision.collider.CompareTag("Wall") && ghost)
+        {
+            rbBolt.isKinematic = true;
+        }
+        else if (collision.gameObject.tag == "Wall")
         {
             wallHitSFX.Play();
             Bounce(collision.contacts[0].normal);
@@ -63,7 +68,7 @@ public class Bolt : MonoBehaviour
         {
             HitPlayer(collision.gameObject);
         }
-        
+        //rbBolt.isKinematic = false;
     }
 
     public void activateGhost()
