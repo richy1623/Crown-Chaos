@@ -159,6 +159,7 @@ public class Player : MonoBehaviour
             gameObject.layer = 7;
             rigidBody.velocity = Vector3.zero;
             GetComponent<Renderer>().enabled = false;
+            if (aimShperes != null) foreach (GameObject o in aimShperes) o.GetComponent<Renderer>().enabled = false;
             GetComponent<Collider>().enabled = false;
             yawInput = 0;
             forwardInput = 0;
@@ -197,6 +198,7 @@ public class Player : MonoBehaviour
         dead = false;
         respawnWait = 0;
         GetComponent<Renderer>().enabled = true;
+        if (aimShperes != null) foreach (GameObject o in aimShperes) o.GetComponent<Renderer>().enabled = true;
         GetComponent<Collider>().enabled = true;
         isInvunrable = true;
         invunrableDuration = 3f;

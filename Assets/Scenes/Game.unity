@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17616674, g: 0.22047815, b: 0.30280492, a: 1}
+  m_IndirectSpecularColor: {r: 0.17616487, g: 0.22047544, b: 0.30280223, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4247,6 +4247,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 959355039}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &154182178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4685532686067393243, guid: 350fde7a33af057408cb33318cd13cc9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8463989339057052974}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &156648505 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8251833968334255374, guid: 095f5c407cf669e4dad897fa1069ab69,
@@ -8405,7 +8411,7 @@ MonoBehaviour:
   - {x: 37.71, y: 1, z: 22.66}
   - {x: -22.35, y: 1, z: -32.19}
   - {x: -57.5, y: 1, z: 17}
-  player: {fileID: 3943355415534706194, guid: 816692c408f82ed43929b36d8ba1e9ba, type: 3}
+  player: {fileID: 154182178}
   ai: {fileID: 3943355415534706194, guid: 816692c408f82ed43929b36d8ba1e9ba, type: 3}
   difficulty: 1
 --- !u!4 &350144657
