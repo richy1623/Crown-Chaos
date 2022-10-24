@@ -334,8 +334,6 @@ public class Player : MonoBehaviour
             hasPowerup = true;
             powerupSpawner.spawnPowerup(other.gameObject.transform.position);
             Destroy(other.gameObject);
-            Debug.Log(timedPowers.ContainsKey(power));
-            Debug.Log(timedPowers[power]);
         }
     }
 
