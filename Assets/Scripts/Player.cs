@@ -146,7 +146,7 @@ public class Player : MonoBehaviour
             Shoot();
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && !HUD.gameIsPaused)
+        if(Input.GetKeyDown(KeyCode.Space) && !HUD.gameIsPaused && hasPowerup)
         {
             powerupUI.activatePowerup();
             powerupIndicator.SetActive(true);
